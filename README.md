@@ -1,2 +1,1 @@
-# project-city-taxi
-ASE coursework 01
+# infotek

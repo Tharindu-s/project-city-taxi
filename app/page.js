@@ -1,3 +1,4 @@
+
 import Layout from "@/components/layout/Layout"
 import About1 from "@/components/sections/About1"
 import Achievement1 from "@/components/sections/Achievement1"
@@ -13,12 +14,12 @@ import Project1 from "@/components/sections/Project1"
 import Service1 from "@/components/sections/Service1"
 import Team1 from "@/components/sections/Team1"
 import Testimonial1 from "@/components/sections/Testimonial1"
-export default function Home() {
+export default function Home1Single() {
 
     return (
         <>
 
-            <Layout headerStyle={1} footerStyle={1}>
+            <Layout headerStyle={1} footerStyle={1} onePageNav>
                 <Hero1 />
                 <Marque1 />
                 <About1 />

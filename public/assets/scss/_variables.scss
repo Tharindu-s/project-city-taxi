@@ -1,26 +1,25 @@
-$heading-font: 'Kumbh Sans', sans-serif;
-$body-font: 'Kumbh Sans', sans-serif;
+$heading-font: "Kumbh Sans", sans-serif;
+$body-font: "Kumbh Sans", sans-serif;
 
 :root {
-
-    --body: #fff;
-    --black: #000;
-    --white: #fff;
-    --theme: #384BFF;
-    --theme2: #384BFF;
-    --header: #0F0D1D;
-    --text: #585858;
-    --text-2: #ffffffcc;
-    --border: #E3E3E3;
-    --border2: #242449;
-    --border3: #5262FF;
-    --bg: #F3F7FB;
-    --bg2: #18185E;
-    --bg3: #ffffff33;
-    --box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.06);
-    --box-shadow-2: 0px 4px 25px rgba(56, 75, 255, 0.1);
-    --heading-font: $heading-font ;
-    --body-font: $body-font
+  --body: #fff;
+  --black: #000;
+  --white: #fff;
+  --theme: #e89d04;
+  --theme2: #e9a52a;
+  --header: #0f0d1d;
+  --text: #585858;
+  --text-2: #ffffffcc;
+  --border: #e3e3e3;
+  --border2: #242449;
+  --border3: #a06d04;
+  --bg: #f3f7fb;
+  --bg2: #18185e;
+  --bg3: #ffffff33;
+  --box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.06);
+  --box-shadow-2: 0px 4px 25px rgba(56, 75, 255, 0.1);
+  --heading-font: $heading-font;
+  --body-font: $body-font;
 }
 
 // Theme Color - Defualt Colors
