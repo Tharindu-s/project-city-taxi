@@ -1373,6 +1373,11 @@ span {
   position: relative;
   margin-top: 125px;
 }
+@media (min-width: 992px) {
+  .cta-wrapper {
+    margin-top: 220px;
+  }
+}
 @media (max-width: 1199px) {
   .cta-wrapper {
     margin-top: 0;
@@ -1584,10 +1589,14 @@ span {
 .faq-section {
   position: relative;
 }
+@media (min-width: 992px) {
+  .faq-section {
+    margin-top: 100px;
+  }
+}
 @media (max-width: 1199px) {
   .faq-section {
     padding-bottom: 0;
-    margin-bottom: -15px;
   }
 }
 .faq-section .faq-shape-box {

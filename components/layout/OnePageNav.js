@@ -8,19 +8,7 @@ export default function OnePageNav() {
           <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href="#about">About</Link>
-        </li>
-        <li>
-          <Link href="#service">Services</Link>
-        </li>
-        <li>
-          <Link href="#project">Projects</Link>
-        </li>
-        <li>
-          <Link href="#team">Team</Link>
-        </li>
-        <li>
-          <Link href="#blog">Blog</Link>
+          <Link href="/book">Book now</Link>
         </li>
       </ul>
     </>

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import BackToTop from "../elements/BackToTop";
 import Breadcrumb from "./Breadcrumb";
-import MouseCursor from "./MouseCursor";
+
 import Offcanvas from "./Offcanvas";
 import Search from "./Search";
 import Footer1 from "./footer/Footer1";
@@ -38,7 +38,6 @@ export default function Layout({
   }, []);
   return (
     <>
-      <MouseCursor />
       <Offcanvas isOffCanvas={isOffCanvas} handleOffCanvas={handleOffCanvas} />
 
       {headerStyle == 1 ? (
