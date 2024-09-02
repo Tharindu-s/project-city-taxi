@@ -15,8 +15,9 @@ datasource db {
 
 model Guest {
   id      Int      @id @default(autoincrement())
-  email   String   @unique
   name    String?
+  email   String?
+  phone   String?
   city    String
   Users Users[]
 }
@@ -27,6 +28,11 @@ model Guest {
    password   String
    guest      Guest   @relation(fields: [guestId], references: [id])
    guestId    Int     @unique
+ }
+
+  model Test {
+   id         Int     @id @default(autoincrement())
+   data       String
  }
 
 // model Post {
