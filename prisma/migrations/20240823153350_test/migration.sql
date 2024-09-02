@@ -1,5 +1,6 @@
 -- CreateTable
-CREATE TABLE "Post" (
+CREATE TABLE "Post"
+(
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -12,7 +13,8 @@ CREATE TABLE "Post" (
 );
 
 -- CreateTable
-CREATE TABLE "Profile" (
+CREATE TABLE "Profile"
+(
     "id" SERIAL NOT NULL,
     "bio" TEXT,
     "userId" INTEGER NOT NULL,
@@ -21,7 +23,8 @@ CREATE TABLE "Profile" (
 );
 
 -- CreateTable
-CREATE TABLE "User" (
+CREATE TABLE "User"
+(
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
@@ -36,7 +39,7 @@ CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
-ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
