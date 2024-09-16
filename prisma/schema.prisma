@@ -14,26 +14,26 @@ datasource db {
 }
 
 model Guest {
-  id      Int      @id @default(autoincrement())
-  name    String?
-  email   String?
-  phone   String?
-  city    String
+  id    Int     @id @default(autoincrement())
+  name  String?
+  email String?
+  phone String?
+  city  String
   Users Users[]
 }
 
- model Users {
-   id         Int     @id @default(autoincrement())
-   email      String  @unique
-   password   String
-   guest      Guest   @relation(fields: [guestId], references: [id])
-   guestId    Int     @unique
- }
+model Users {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  guest    Guest  @relation(fields: [guestId], references: [id])
+  guestId  Int    @unique
+}
 
-  model Test {
-   id         Int     @id @default(autoincrement())
-   data       String
- }
+model Test {
+  id   Int    @id @default(autoincrement())
+  data String
+}
 
 //Google Map & Tour Details
 model Ride {
@@ -54,7 +54,8 @@ model Rate {
   id   Int    @id @default(autoincrement())
   rate String
 }
-// Drriver Rating
+
+// Driver Rating
 model RideRating {
   id             Int    @id @default(autoincrement())
   rating         String
@@ -68,6 +69,47 @@ model RideRating {
   rideId         String
 }
 
+// Passenger Details
+model PassengerDetails {
+  id      Int    @id @default(autoincrement())
+  name    String
+  contact String
+  userId  Int    @unique
+}
+
+// Driver Details
+model DriverDetails {
+  id        Int    @id @default(autoincrement())
+  licenceNo String
+  name      String
+  nic       String
+  dob       String
+  status    String
+  date      String
+  time      String
+  imgUrl    String
+  contact   String
+  vehicleId String
+  userId    Int    @unique
+}
+
+// Vehicle Details
+model vehicleDetails {
+  id            Int    @id @default(autoincrement())
+  number        String
+  type          String
+  seatCount     Int
+  imgUrl1       String
+  imgUrl2       String
+  imgUrl3       String
+  make          String
+  rateId        String
+  revLicenceUrl String
+  revLicenceExp String
+  insuaranceNo  String
+  insuaranceExp String
+}
+
 // model Post {
 //   id        Int      @id @default(autoincrement())
 //   createdAt DateTime @default(now())
@@ -78,7 +120,3 @@ model RideRating {
 //   author    User     @relation(fields: [authorId], references: [id])
 //   authorId  Int
 // }
-
-
-
-
