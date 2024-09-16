@@ -4,6 +4,7 @@ import Link from "next/link";
 import img from "../../../public/assets/img/join.jpg";
 import { createGuest } from "@/actions/actions";
 import prisma from "@/lib/db";
+import PassengerJoin from "@/components/forms/PassengerJoin";
 
 export default async function Contact() {
   const guests = await prisma.guest.findMany({
@@ -29,82 +30,7 @@ export default async function Contact() {
               <div className="contact-wrapper-2">
                 <div className="row g-4 align-items-center">
                   <div className="col-lg-6">
-                    <div className="contact-content">
-                      <h2>Want to join City Taxi?</h2>
-                      <p>
-                        Fill the below form and we will provide you a new
-                        account to join City Taxi.
-                      </p>
-                      <form action={createGuest} className="contact-form-items">
-                        <div className="row g-4">
-                          <div
-                            className="col-lg-6 wow fadeInUp"
-                            data-wow-delay=".3s"
-                          >
-                            <div className="form-clt">
-                              <span>Your name*</span>
-                              <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Your Name"
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className="col-lg-6 wow fadeInUp"
-                            data-wow-delay=".5s"
-                          >
-                            <div className="form-clt">
-                              <span>Your Email*</span>
-                              <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                placeholder="Your Email"
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className="col-lg-6 wow fadeInUp"
-                            data-wow-delay=".5s"
-                          >
-                            <div className="form-clt">
-                              <span>Your Contact Number*</span>
-                              <input
-                                type="text"
-                                name="phone"
-                                id="phone"
-                                placeholder="Your Contact Number"
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className="col-lg-6 wow fadeInUp"
-                            data-wow-delay=".5s"
-                          >
-                            <div className="form-clt">
-                              <span>Your City*</span>
-                              <input
-                                type="text"
-                                name="city"
-                                id="city"
-                                placeholder="Your City"
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className="col-lg-7 wow fadeInUp"
-                            data-wow-delay=".9s"
-                          >
-                            <button type="submit" className="theme-btn">
-                              Submit
-                              <i className="fa-solid fa-arrow-right-long" />
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
+                    <PassengerJoin />
                   </div>
                   <div className="col-lg-6">
                     <div className="map-section">

@@ -12,6 +12,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 //admin Table
 model Admin {
   id      Int    @id @default(autoincrement())
@@ -20,22 +21,28 @@ model Admin {
   regDate String
   userId  Int    @unique
 }
+
 //guest table
 model Guest {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  city  String
+  id         Int     @id @default(autoincrement())
+  name       String?
+  email      String? @unique
+  phone      String?
+  city       String
+  photoUrl   String?
+  type       String
+  isVerified Boolean @default(false)
 }
+
 //users table
 model Users {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  username String   @unique
   password String
   type     String
-  status   String
-  regDate  String
-  guestId  Int    @unique
+  regDate  DateTime
+  guestId  Int
 }
 
 model Test {

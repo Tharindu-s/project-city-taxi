@@ -13,6 +13,9 @@ export default function OnePageNav() {
         <li>
           <Link href="/join">Join</Link>
         </li>
+        <li>
+          <Link href="/dashboard">admin</Link>
+        </li>
       </ul>
     </>
   );
