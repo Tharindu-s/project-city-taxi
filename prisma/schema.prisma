@@ -35,6 +35,39 @@ model Guest {
    data       String
  }
 
+//Google Map & Tour Details
+model Ride {
+  id             Int    @id @default(autoincrement())
+  pickupLocation String
+  dropLocation   String
+  status         String
+  startTime      String
+  amount         String
+  distant        String
+  paymentMethod  String
+  vehicleId      String
+  passengerId    String
+  driverId       String
+}
+
+model Rate {
+  id   Int    @id @default(autoincrement())
+  rate String
+}
+// Drriver Rating
+model RideRating {
+  id             Int    @id @default(autoincrement())
+  rating         String
+  comment        String
+  safeDrive      String
+  professional   String
+  routeExpertise String
+  onTime         String
+  vehicleState   String
+  driverId       String
+  rideId         String
+}
+
 // model Post {
 //   id        Int      @id @default(autoincrement())
 //   createdAt DateTime @default(now())
