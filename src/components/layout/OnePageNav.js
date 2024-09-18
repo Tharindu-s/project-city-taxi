@@ -5,6 +5,9 @@ export default function OnePageNav() {
     <>
       <ul>
         <li className="has-dropdown active menu-thumb">
+          <Link href="/login">Login</Link>
+        </li>
+        <li className="has-dropdown active menu-thumb">
           <Link href="/">Home</Link>
         </li>
         <li>
