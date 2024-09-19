@@ -1,12 +1,40 @@
+"use client"
 import Layout from "@/components/layout/Layout";
 import Image from "next/image";
-import Link from "next/link";
-import img from "../../../public/assets/img/join.jpg";
-import { createGuest } from "@/actions/actions";
-import prisma from "@/lib/db";
-import PassengerJoin from "@/components/forms/PassengerJoin";
 
-export default async function Contact() {
+import img from "../../../public/assets/img/join.jpg";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+
+
+export default function LoginPage() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (data.redirectTo) {
+      router.push(data.redirectTo);
+    } else {
+      alert(data.message);
+    }
+  }
+
+
   return (
     <>
       <Layout
@@ -24,7 +52,7 @@ export default async function Contact() {
                     <div className="contact-content">
                       <h2>Login</h2>
                       <p>Use youe email and password to login to City Taxi.</p>
-                      <form className="contact-form-items">
+                      <form className="contact-form-items" onSubmit={handleSubmit}>
                         <div className="row g-4">
                           <div
                             className="col-lg-12 wow fadeInUp"
@@ -37,6 +65,7 @@ export default async function Contact() {
                                 name="email"
                                 id="email"
                                 placeholder="Your email"
+                                onChange={(e) => setEmail(e.target.value)}
                               />
                             </div>
                           </div>
@@ -51,6 +80,7 @@ export default async function Contact() {
                                 name="password"
                                 id="password"
                                 placeholder="Your password"
+                                onChange={(e) => setPassword(e.target.value)}
                               />
                             </div>
                           </div>
