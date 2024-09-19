@@ -1,4 +1,5 @@
-import LogoutButton from "@/components/layout/LogoutButton";
+
+import Layout from "@/components/layout/Layout";
 import { getUserByEmail } from "@/lib/auth";
 import { cookies } from "next/headers";
 
@@ -10,6 +11,19 @@ export default async function DriverPage() {
     return <div>Access Denied</div>;
     }
 
-    return <div>Welcome to the Driver Page, {user.email}!</div>;
+    return (
+        <>
+            <Layout
+                headerStyle={1}
+                footerStyle={1}
+                onePageNav={undefined}
+                breadcrumbTitle={undefined}
+            >
+                
+                <div>Welcome to the Driver Page, {user.email}!</div>
+            </Layout>
+        </>
+        
+    );
     
 }
