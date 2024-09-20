@@ -24,6 +24,9 @@ export default async function TableDemo() {
     orderBy: {
       isVerified: "asc",
     },
+    where: {
+      type: "passenger",
+    },
   });
 
   return (
