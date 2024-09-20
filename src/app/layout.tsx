@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// import "./globals.css";
+import "./globals.css";
 import "/public/assets/css/bootstrap.min.css";
 import "/public/assets/css/all.min.css";
 import "/public/assets/css/animate.css";

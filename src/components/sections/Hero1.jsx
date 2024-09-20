@@ -29,7 +29,7 @@ export default function Hero1() {
                 <h6 className="wow fadeInUp" data-wow-delay=".2s">
                   Experience Top Taxi Booking Service
                 </h6>
-                <h1 className="wow fadeInUp" data-wow-delay=".4s">
+                <h1 className="wow fadeInUp " data-wow-delay=".4s">
                   Easy Taxi Bookings for Your Hassle-Free Ride
                 </h1>
                 <p className="wow fadeInUp" data-wow-delay=".6s">

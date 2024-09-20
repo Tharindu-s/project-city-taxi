@@ -113,6 +113,16 @@ export async function createUser(formdata: FormData) {
   revalidatePath("/join");
 }
 
+// driver ride acceptance
+
+export async function updateRideStatus(rideId: number, newStatus: string) {
+  await prisma.ride.update({
+    where: { id: rideId },
+    data: { status: newStatus },
+  });
+  revalidatePath("/driver");
+}
+
 // export async function edit(formdata: FormData) {
 //   const guestId = formdata.get("id") as string;
 //   const name = formdata.get("name") as string;
