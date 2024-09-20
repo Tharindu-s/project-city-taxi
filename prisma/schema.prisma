@@ -34,19 +34,13 @@ model Guest {
   isVerified Boolean @default(false)
 }
 
-enum UserType {
-  admin
-  passenger
-  driver
-}
-
 //users table
 model Users {
   id       Int      @id @default(autoincrement())
   email    String   @unique
   username String   @unique
   password String
-  type     UserType @default(passenger)
+  type     String
   regDate  DateTime
   guestId  Int
 }
