@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcrypt";
 
 // create guest
 
@@ -82,11 +83,13 @@ export async function deleteGuest(id: number) {
 
 export async function createUser(formdata: FormData) {
   try {
+
+    const hashedPassword = await bcrypt.hash(formdata.get("password") as string, 10);
     await prisma.users.create({
       data: {
         email: formdata.get("email") as string,
         username: formdata.get("username") as string,
-        password: formdata.get("password") as string,
+        password: hashedPassword,
         type: formdata.get("type") as string,
         regDate: new Date() as Date,
         guestId: Number(formdata.get("guestId")),
