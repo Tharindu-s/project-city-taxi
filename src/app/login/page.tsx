@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Layout from "@/components/layout/Layout";
 import Image from "next/image";
 
@@ -6,21 +6,18 @@ import img from "../../../public/assets/img/join.jpg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
-
 export default function LoginPage() {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
     });
@@ -33,7 +30,6 @@ export default function LoginPage() {
       alert(data.message);
     }
   }
-
 
   return (
     <>
@@ -52,7 +48,10 @@ export default function LoginPage() {
                     <div className="contact-content">
                       <h2>Login</h2>
                       <p>Use youe email and password to login to City Taxi.</p>
-                      <form className="contact-form-items" onSubmit={handleSubmit}>
+                      <form
+                        className="contact-form-items"
+                        onSubmit={handleSubmit}
+                      >
                         <div className="row g-4">
                           <div
                             className="col-lg-12 wow fadeInUp"

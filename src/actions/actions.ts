@@ -83,8 +83,10 @@ export async function deleteGuest(id: number) {
 
 export async function createUser(formdata: FormData) {
   try {
-
-    const hashedPassword = await bcrypt.hash(formdata.get("password") as string, 10);
+    const hashedPassword = await bcrypt.hash(
+      formdata.get("password") as string,
+      10
+    );
     await prisma.users.create({
       data: {
         email: formdata.get("email") as string,
@@ -124,6 +126,22 @@ export async function updateRideStatus(rideId: number, newStatus: string) {
     data: { status: newStatus },
   });
   revalidatePath("/driver");
+}
+
+// get driver count
+
+export async function getActiveDriverCount() {
+  try {
+    const count = await prisma.driverDetails.count({
+      where: {
+        status: "active",
+      },
+    });
+    return count;
+  } catch (error) {
+    console.error("Error fetching active driver count:", error);
+    throw new Error("Failed to retrieve active driver count");
+  }
 }
 
 // export async function edit(formdata: FormData) {

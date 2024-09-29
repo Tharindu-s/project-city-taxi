@@ -14,19 +14,21 @@ const menuItems = [
         icon: homeIcon,
         label: "Home",
         href: "/dashboard/",
-        visible: ["admin", "teacher", "student", "parent"],
       },
       {
         icon: driverIcon,
         label: "Drivers",
         href: "/dashboard/list/drivers",
-        visible: ["admin", "teacher"],
       },
       {
         icon: userIcon,
-        label: "Users",
-        href: "/dashboard/list/users",
-        visible: ["admin", "teacher"],
+        label: "Passengers",
+        href: "/dashboard/list/passengers",
+      },
+      {
+        icon: userIcon,
+        label: "Book",
+        href: "/dashboard/list/book",
       },
     ],
   },
@@ -37,7 +39,6 @@ const menuItems = [
         icon: logoutIcon,
         label: "Logout",
         href: "/",
-        visible: ["admin", "teacher", "student", "parent"],
       },
     ],
   },
@@ -52,20 +53,18 @@ const Menu = () => {
             {i.title}
           </span>
           {i.items.map((item) => {
-            if (item.visible.includes(role)) {
-              return (
-                <Link
-                  href={item.href}
-                  key={item.label}
-                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight"
-                >
-                  <Image src={item.icon} alt="" width={20} height={20} />
-                  <p className="hidden lg:block font-medium text-black">
-                    {item.label}
-                  </p>
-                </Link>
-              );
-            }
+            return (
+              <Link
+                href={item.href}
+                key={item.label}
+                className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight"
+              >
+                <Image src={item.icon} alt="" width={20} height={20} />
+                <p className="hidden lg:block font-medium text-black">
+                  {item.label}
+                </p>
+              </Link>
+            );
           })}
         </div>
       ))}

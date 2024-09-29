@@ -21,6 +21,14 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/maptest/page.jsx",
+    "src/app/book/page.jsx",
+    "src/app/dashboard/list/book/page.jsx"
+  ],
   "exclude": ["node_modules"]
 }

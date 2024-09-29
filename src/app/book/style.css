@@ -1,0 +1,78 @@
+.radio-tile-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; /* Optional: Adds space between items */
+}
+
+.radio-tile-group .input-container {
+  position: relative;
+  height: 80px;
+  width: 150px;
+  margin: 0.5rem;
+  flex: 1 1 150px; /* Allows wrapping and defines the minimum box size */
+}
+
+.radio-tile-group .input-container .radio-button {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-tile-group .input-container .radio-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #e89d04;
+  padding: 1rem;
+  transition: transform 300ms ease;
+}
+
+.radio-tile-group .input-container .icon svg {
+  fill: #e89d04;
+  width: 2rem;
+  height: 2rem;
+}
+
+.radio-tile-group .input-container .radio-tile-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #e89d04;
+}
+
+.radio-tile-group .input-container .radio-button:checked + .radio-tile {
+  background-color: #e89d04;
+  border: 2px solid #e89d04;
+  color: white;
+  transform: scale(1.1, 1.1);
+}
+
+.radio-tile-group
+  .input-container
+  .radio-button:checked
+  + .radio-tile
+  .icon
+  svg {
+  fill: white;
+  background-color: #e89d04;
+}
+
+.radio-tile-group
+  .input-container
+  .radio-button:checked
+  + .radio-tile
+  .radio-tile-label {
+  color: white;
+  background-color: #e89d04;
+}
