@@ -5,6 +5,7 @@ import img from "../../../public/assets/img/join.jpg";
 import { createGuest } from "@/actions/actions";
 import prisma from "@/lib/db";
 import PassengerJoin from "@/components/forms/PassengerJoin";
+import React from "react"; 
 
 export default async function Contact() {
   const guests = await prisma.guest.findMany({

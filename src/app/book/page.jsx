@@ -2,16 +2,10 @@
 import Layout from "@/components/layout/Layout";
 import { vehicles } from "@/data/vehicles";
 import { FaLocationArrow, FaTimes } from "react-icons/fa";
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
+import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import { useRef, useState } from "react";
-import { customMapStyle } from "@/data/CustomMapStyles";
 import "./style.css";
+import Map from "@/components/common/Map";
 
 const center = { lat: 6.9271, lng: 79.8612 };
 const countryCode = "LK";
@@ -65,15 +59,13 @@ export default function Contact() {
     setSelectedVehicle(vehicle);
   }
 
-  // calculate total
-
   function calculateTotal() {
     if (selectedVehicle && distance) {
-      const distanceValue = parseFloat(distance.replace(/[^0-9.]/g, "")); // Extract numeric distance
-      const totalCost = selectedVehicle.rate * distanceValue; // Calculate total cost based on vehicle rate
-      return totalCost.toFixed(2); // Return formatted total cost
+      const distanceValue = parseFloat(distance.replace(/[^0-9.]/g, ""));
+      const totalCost = selectedVehicle.rate * distanceValue;
+      return totalCost.toFixed(2);
     }
-    return 0; // Return 0 if no vehicle is selected or distance is not available
+    return 0;
   }
 
   return (
@@ -107,34 +99,10 @@ export default function Contact() {
                           left: 0,
                         }}
                       >
-                        {/* Google Map Box */}
-                        <GoogleMap
-                          center={center}
-                          zoom={15}
-                          mapContainerStyle={{ width: "100%", height: "100%" }}
-                          options={{
-                            zoomControl: false,
-                            streetViewControl: false,
-                            mapTypeControl: false,
-                            fullscreenControl: false,
-                            styles: customMapStyle,
-                          }}
-                          onLoad={(map) => setMap(map)}
-                        >
-                          <Marker position={center} />
-                          {directionsResponse && (
-                            <DirectionsRenderer
-                              directions={directionsResponse}
-                              options={{
-                                polylineOptions: {
-                                  strokeColor: "#e89d04",
-                                  strokeOpacity: 0.8,
-                                  strokeWeight: 6,
-                                },
-                              }}
-                            />
-                          )}
-                        </GoogleMap>
+                        <Map
+                          directionsResponse={directionsResponse}
+                          setMap={setMap}
+                        />
                       </div>
 
                       <div
@@ -205,7 +173,6 @@ export default function Contact() {
                                 backgroundColor: "#e89d04",
                                 color: "white",
                                 padding: "8px 16px",
-
                                 border: "none",
                                 cursor: "pointer",
                               }}
@@ -270,14 +237,11 @@ export default function Contact() {
                             data-wow-delay=".7s"
                           >
                             {vehicles.map((vehicle) => (
-                              <div>
-                                <div
-                                  className="radio-tile-group"
-                                  key={vehicle.id}
-                                >
+                              <div key={vehicle.id}>
+                                <div className="radio-tile-group">
                                   <div className="input-container">
                                     <input
-                                      id="walk"
+                                      id={`vehicle-${vehicle.id}`} // Unique ID for each vehicle
                                       value={vehicle.id}
                                       className="radio-button"
                                       type="radio"
@@ -291,7 +255,7 @@ export default function Contact() {
                                         <vehicle.icon className="mr-2" />
                                       </div>
                                       <label
-                                        for="walk"
+                                        htmlFor={`vehicle-${vehicle.id}`} // Corrected to htmlFor
                                         className="radio-tile-label"
                                       >
                                         {vehicle.type}
