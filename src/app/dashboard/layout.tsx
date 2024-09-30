@@ -2,7 +2,7 @@ import Menu from "@/components/admin/Menu";
 import Navbar from "@/components/admin/Navbar";
 import Image from "next/image";
 import Link from "next/link";
-import "../globals.css";
+import "./globals.css";
 import logo from "../../../public/assets/img/logo/logo black.png";
 
 export default function DashboardLayout({
