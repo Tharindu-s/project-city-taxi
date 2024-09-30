@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import { getUserByEmail } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { cookies } from "next/headers";
+import React from "react";
 
 export default async function DriverPage() {
   const token = cookies().get("token")?.value;
