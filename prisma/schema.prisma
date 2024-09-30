@@ -57,6 +57,7 @@ model Ride {
   dropLocation   String
   status         String
   startTime      String
+  endTime        String
   amount         String
   distant        String
   paymentMethod  String
