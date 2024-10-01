@@ -45,11 +45,6 @@ model Users {
   guestId  Int
 }
 
-model Test {
-  id   Int    @id @default(autoincrement())
-  data String
-}
-
 //Google Map & Tour Details
 model Ride {
   id             Int    @id @default(autoincrement())

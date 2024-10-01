@@ -6,13 +6,36 @@ import { getUserByEmail } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { cookies } from "next/headers";
 import React from "react";
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export default async function DriverPage() {
-  const token = cookies().get("token")?.value;
-  const user = token ? await getUserByEmail(token) : null;
+  
+  const token = cookies().get('token')?.value;
 
-  if (!user || user.type !== "driver") {
-    return <div>Access Denied</div>;
+  if (!token) {
+      return <div>Access Denied</div>;
+  }
+
+  let decodedToken;
+  try {
+      decodedToken = jwt.verify(token, JWT_SECRET ?? "");
+  } catch (error) {
+      console.error('Invalid token:', error);
+      return <div>Access Denied</div>;
+  }
+
+  const { email, type } = decodedToken as { email: string, type: string };
+
+  if (type !== 'driver') {
+      return <div>Access Denied</div>;
+  }
+
+  const user = await getUserByEmail(email);
+
+  if (!user) {
+      return <div>Access Denied</div>;
   }
 
   const requests = await prisma.ride.findMany({

@@ -1,6 +1,9 @@
 
 import { getUserByEmail, verifyPassword } from "@/lib/auth";
 import { cookies } from "next/headers";
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function POST(request: Request) {
     const { email, password } = await request.json();
@@ -11,8 +14,11 @@ export async function POST(request: Request) {
     const isValidPassword = await verifyPassword(password, user.password);
     if (!isValidPassword) return new Response(JSON.stringify({ message: 'Invalid password' }), { status: 401 });
 
-    // Set a cookie with the user’s email
-    cookies().set('token', user.email, { httpOnly: true, maxAge: 60 * 60 * 24 });
+    // Generate a JWT
+    const token = jwt.sign({ email: user.email, type: user.type }, JWT_SECRET ?? "", { expiresIn: '24h' });
+
+    // Set a cookie with the JWT
+    cookies().set('token', token, { httpOnly: true, maxAge: 60 * 60 * 24 });
 
     // Redirect based on user type
     if (user.type === 'admin') {

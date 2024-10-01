@@ -38,7 +38,7 @@ const menuItems = [
       {
         icon: logoutIcon,
         label: "Logout",
-        href: "/",
+        href: "/logout",
       },
     ],
   },
