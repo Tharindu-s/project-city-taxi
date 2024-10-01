@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 import "./styles.css";
 import Link from "next/link";
-import { joinPassenger } from "@/actions/actions";
+import { joinDriver } from "@/actions/actions";
 
 // zod form validation
 const userSchema = z.object({
@@ -18,10 +18,13 @@ const userSchema = z.object({
     .string()
     .max(30, { message: "City must not exceed 30 charatcers" })
     .min(3, { message: "City must be at least 3 charatcers long" }),
-  photoUrl: z.string({ message: "Invalid photo URL" }),
+  imgUrl: z.string(),
+  nic: z.string().max(13, { message: "NIC must not exceed 13 charatcers" }),
+  dob: z.string(),
+  licenceNo: z.string(),
 });
 
-const PassengerJoin = () => {
+const DriverJoin = () => {
   async function clientAction(formdata: FormData) {
     // construct a new user object
 
@@ -30,7 +33,10 @@ const PassengerJoin = () => {
       email: formdata.get("email"),
       phone: formdata.get("phone"),
       city: formdata.get("city"),
-      photoUrl: formdata.get("photoUrl"),
+      nic: formdata.get("nic"),
+      dob: formdata.get("dob"),
+      imgUrl: formdata.get("imgUrl"),
+      licenceNo: formdata.get("licenceNo"),
     };
 
     // validation
@@ -46,7 +52,7 @@ const PassengerJoin = () => {
       toast.error(errorMessage);
       return;
     }
-    const result = await joinPassenger(formdata);
+    const result = await joinDriver(formdata);
     if (result?.error) {
       toast.error(result.error);
     } else {
@@ -70,7 +76,7 @@ const PassengerJoin = () => {
       >
         <Link href="/driver-join">
           <button className="btn">
-            <i className="animation"></i>Join as a driver
+            <i className="animation"></i>Join as a passenger
             <i className="animation"></i>
           </button>
         </Link>
@@ -112,6 +118,23 @@ const PassengerJoin = () => {
           </div>
           <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
             <div className="form-clt">
+              <span>Your NIC Number*</span>
+              <input
+                type="text"
+                name="nic"
+                id="nic"
+                placeholder="Your NIC Number"
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>DOB*</span>
+              <input type="date" id="dob" name="dob" />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
+            <div className="form-clt">
               <span> Your City*</span>
               <input
                 type="text"
@@ -123,12 +146,23 @@ const PassengerJoin = () => {
           </div>
           <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
             <div className="form-clt">
-              <span>Photo*</span>
+              <span>Image*</span>
               <input
                 type="text"
-                name="photoUrl"
-                id="photoUrl"
-                placeholder="Photo"
+                name="imgUrl"
+                id="imgUrl"
+                placeholder="Your imgUrl "
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>Licence Number*</span>
+              <input
+                type="text"
+                name="licenceNo"
+                id="licenceNo"
+                placeholder="licenceNo "
               />
             </div>
           </div>
@@ -195,4 +229,4 @@ const PassengerJoin = () => {
   );
 };
 
-export default PassengerJoin;
+export default DriverJoin;

@@ -22,17 +22,18 @@ model Admin {
   userId  Int    @unique
 }
 
-//guest table
-model Guest {
-  id         Int     @id @default(autoincrement())
-  name       String?
-  email      String? @unique
-  phone      String?
-  city       String
-  photoUrl   String?
-  type       String
-  isVerified Boolean @default(false)
-}
+// //guest table
+// model Guest {
+//   id         Int     @id @default(autoincrement())
+//   name       String?
+//   email      String? @unique
+//   phone      String?
+//   city       String
+//   photoUrl   String?
+//   type       String
+//   gender     String?
+//   isVerified Boolean @default(false)
+// }
 
 //users table
 model Users {
@@ -82,26 +83,36 @@ model RideRating {
 
 // Passenger Details
 model PassengerDetails {
-  id      Int    @id @default(autoincrement())
-  name    String
-  contact String
-  userId  Int    @unique
+  id         Int     @id @default(autoincrement())
+  name       String
+  email      String  @unique
+  contact    String
+  userId     Int?    @unique
+  city       String
+  photoUrl   String
+  type       String  @default("passenger")
+  gender     String
+  isVerified Boolean @default(false)
 }
 
 // Driver Details
 model DriverDetails {
-  id        Int    @id @default(autoincrement())
-  licenceNo String
-  name      String
-  nic       String
-  dob       String
-  status    String
-  date      String
-  time      String
-  imgUrl    String
-  contact   String
-  vehicleId String
-  userId    Int    @unique
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String?  @unique
+  nic        String
+  city       String
+  dob        String
+  status     String?  @default("available")
+  date       DateTime
+  imgUrl     String
+  contact    String
+  licenceNo  String
+  vehicleId  String[]
+  type       String   @default("driver")
+  gender     String
+  userId     Int?     @unique
+  isVerified Boolean  @default(false)
 }
 
 // Vehicle Details

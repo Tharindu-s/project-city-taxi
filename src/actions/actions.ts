@@ -6,12 +6,52 @@ import bcrypt from "bcrypt";
 
 // create guest
 
-export async function createGuest(formdata: FormData) {
+// export async function createGuest(formdata: FormData) {
+//   const email = formdata.get("email") as string;
+
+//   try {
+//     // Check if the email already exists
+//     const existingGuest = await prisma.guest.findUnique({
+//       where: { email },
+//     });
+
+//     if (existingGuest) {
+//       return {
+//         error: "Email already exists.",
+//       };
+//     }
+
+//     // Create the new guest if the email doesn't exist
+//     await prisma.guest.create({
+//       data: {
+//         name: formdata.get("name") as string,
+//         email: email,
+//         phone: formdata.get("phone") as string,
+//         city: formdata.get("city") as string,
+//         type: formdata.get("type") as string,
+//         gender: formdata.get("gender") as string,
+//       },
+//     });
+
+//     console.log("Guest created successfully");
+//   } catch (error) {
+//     console.error("Error creating guest:", error);
+//     return {
+//       error: "Error adding user",
+//     };
+//   }
+
+//   revalidatePath("/join");
+// }
+
+// create passenger guest
+
+export async function joinPassenger(formdata: FormData) {
   const email = formdata.get("email") as string;
 
   try {
     // Check if the email already exists
-    const existingGuest = await prisma.guest.findUnique({
+    const existingGuest = await prisma.passengerDetails.findUnique({
       where: { email },
     });
 
@@ -22,13 +62,60 @@ export async function createGuest(formdata: FormData) {
     }
 
     // Create the new guest if the email doesn't exist
-    await prisma.guest.create({
+    await prisma.passengerDetails.create({
       data: {
         name: formdata.get("name") as string,
         email: email,
-        phone: formdata.get("phone") as string,
+        contact: formdata.get("phone") as string,
         city: formdata.get("city") as string,
         type: formdata.get("type") as string,
+        gender: formdata.get("gender") as string,
+        photoUrl: formdata.get("photoUrl") as string,
+      },
+    });
+
+    console.log("Guest created successfully");
+  } catch (error) {
+    console.error("Error creating guest:", error);
+    return {
+      error: "Error adding user",
+    };
+  }
+
+  // revalidatePath("/join");
+}
+
+// create driver guest
+
+export async function joinDriver(formdata: FormData) {
+  const email = formdata.get("email") as string;
+
+  try {
+    // Check if the email already exists
+    const existingGuest = await prisma.driverDetails.findUnique({
+      where: { email },
+    });
+
+    if (existingGuest) {
+      return {
+        error: "Email already exists.",
+      };
+    }
+
+    // Create the new guest if the email doesn't exist
+    await prisma.driverDetails.create({
+      data: {
+        name: formdata.get("name") as string,
+        email: email,
+        contact: formdata.get("phone") as string,
+        city: formdata.get("city") as string,
+        type: formdata.get("type") as string,
+        gender: formdata.get("gender") as string,
+        nic: formdata.get("nic") as string,
+        dob: formdata.get("dob") as string,
+        date: new Date(),
+        imgUrl: formdata.get("imgUrl") as string,
+        licenceNo: formdata.get("licenceNo") as string,
       },
     });
 
@@ -45,39 +132,39 @@ export async function createGuest(formdata: FormData) {
 
 // update guests
 
-export async function editGuest(formdata: FormData) {
-  const guestId = formdata.get("id") as string;
-  try {
-    await prisma.guest.update({
-      where: {
-        id: Number(guestId),
-      },
-      data: {
-        name: formdata.get("name") as string,
-        email: formdata.get("email") as string,
-        phone: formdata.get("phone") as string,
-        city: formdata.get("city") as string,
-      },
-    });
-  } catch (error) {
-    console.error("Error updating guest:", error);
-  }
-  revalidatePath("/join/[id]");
-}
+// export async function editGuest(formdata: FormData) {
+//   const guestId = formdata.get("id") as string;
+//   try {
+//     await prisma.guest.update({
+//       where: {
+//         id: Number(guestId),
+//       },
+//       data: {
+//         name: formdata.get("name") as string,
+//         email: formdata.get("email") as string,
+//         phone: formdata.get("phone") as string,
+//         city: formdata.get("city") as string,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error updating guest:", error);
+//   }
+//   revalidatePath("/join/[id]");
+// }
 
 // delete guests
 
-export async function deleteGuest(id: number) {
-  try {
-    await prisma.guest.delete({
-      where: { id },
-    });
-  } catch (error) {
-    return {
-      error: "Error deleting user",
-    };
-  }
-}
+// export async function deleteGuest(id: number) {
+//   try {
+//     await prisma.guest.delete({
+//       where: { id },
+//     });
+//   } catch (error) {
+//     return {
+//       error: "Error deleting user",
+//     };
+//   }
+// }
 
 // create user
 
@@ -99,14 +186,14 @@ export async function createUser(formdata: FormData) {
     });
 
     // Update the guest state to false
-    await prisma.guest.update({
-      where: {
-        id: Number(formdata.get("guestId")),
-      },
-      data: {
-        isVerified: true,
-      },
-    });
+    // await prisma.guest.update({
+    //   where: {
+    //     id: Number(formdata.get("guestId")),
+    //   },
+    //   data: {
+    //     isVerified: true,
+    //   },
+    // });
 
     console.log("Guest created successfully");
   } catch (error) {

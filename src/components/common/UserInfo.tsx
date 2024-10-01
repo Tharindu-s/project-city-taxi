@@ -7,7 +7,7 @@ interface Guest {
   id: number;
   name: string | null;
   email: string | null;
-  phone: string | null;
+  contact: string | null;
   city: string;
   photoUrl: string | null;
   type: string;
@@ -87,7 +87,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         type="text"
                         name="phone"
                         id="phone"
-                        defaultValue={guest?.phone || ""}
+                        defaultValue={guest?.contact || ""}
                         placeholder="Your Phone"
                         disabled
                       />

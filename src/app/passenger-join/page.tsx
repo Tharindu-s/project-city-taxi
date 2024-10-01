@@ -2,23 +2,22 @@ import Layout from "@/components/layout/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import img from "../../../public/assets/img/join.jpg";
-import { createGuest } from "@/actions/actions";
 import prisma from "@/lib/db";
 import PassengerJoin from "@/components/forms/PassengerJoin";
-import React from "react"; 
+import React from "react";
 
 export default async function Contact() {
-  const guests = await prisma.guest.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phone: true,
-      city: true,
-    },
-  });
+  // const guests = await prisma.guest.findMany({
+  //   select: {
+  //     id: true,
+  //     name: true,
+  //     email: true,
+  //     phone: true,
+  //     city: true,
+  //   },
+  // });
   return (
-    <>
+    <div>
       <Layout
         headerStyle={1}
         footerStyle={1}
@@ -50,11 +49,11 @@ export default async function Contact() {
                 </div>
               </div>
             </div>
-            <div className="container">
+            {/* <div className="container">
               {" "}
               <div className="col-lg-6 align-items-center">
                 {guests.map((guest) => (
-                  <Link href={`/join/${guest.id}`}>
+                  <Link href={`/join/${guest.id}`} key={guest.id}>
                     <div className="col-lg-2">
                       <h3>{guest.name}</h3>
                       <h3>{guest.email}</h3>
@@ -67,10 +66,10 @@ export default async function Contact() {
                   </Link>
                 ))}
               </div>
-            </div>
+            </div> */}
           </section>
         </div>
       </Layout>
-    </>
+    </div>
   );
 }

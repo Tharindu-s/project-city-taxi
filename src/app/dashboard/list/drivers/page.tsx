@@ -3,7 +3,7 @@ import UsersTable from "@/components/common/UsersTable";
 import React from "react";
 
 export default async function TableDemo() {
-  const guests = await prisma.guest.findMany({
+  const guests = await prisma.driverDetails.findMany({
     select: {
       id: true,
       name: true,
@@ -12,9 +12,6 @@ export default async function TableDemo() {
     },
     orderBy: {
       isVerified: "asc",
-    },
-    where: {
-      type: "driver",
     },
   });
 
