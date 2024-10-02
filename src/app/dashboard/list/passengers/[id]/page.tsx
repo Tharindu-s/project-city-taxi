@@ -8,7 +8,7 @@ interface GuestParams {
 
 export default async function guest({ params }: { params: GuestParams }) {
   // get one guest
-  const guest = await prisma.passengerDetails.findUnique({
+  const guest = await prisma.driverDetails.findUnique({
     where: {
       // dynamic params are strings. convert to a number
       id: Number(params.id),

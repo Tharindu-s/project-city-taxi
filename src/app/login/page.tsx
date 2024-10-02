@@ -32,7 +32,7 @@ export default function LoginPage() {
   }
 
   return (
-    <>
+    <div>
       <Layout
         headerStyle={1}
         footerStyle={1}
@@ -117,6 +117,6 @@ export default function LoginPage() {
           </section>
         </div>
       </Layout>
-    </>
+    </div>
   );
 }
