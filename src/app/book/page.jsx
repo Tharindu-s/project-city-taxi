@@ -144,6 +144,23 @@ export default function Contact() {
                               />
                             </Autocomplete>
                           </div>
+
+                          <div style={{ display: "flex", gap: "4px" }}>
+                            <button
+                              onClick={calculateRoute}
+                              style={{
+                                backgroundColor: "#e89d04",
+                                color: "white",
+                                padding: "8px 16px",
+                                border: "none",
+                                cursor: "pointer",
+                              }}
+                            >
+                              test
+                            </button>
+                            
+                          </div>
+
                           <div style={{ flexGrow: 1 }}>
                             <Autocomplete
                               onLoad={(autocomplete) =>
