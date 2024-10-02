@@ -51,13 +51,21 @@ export async function joinPassenger(formdata: FormData) {
 
   try {
     // Check if the email already exists
-    const existingGuest = await prisma.passengerDetails.findUnique({
+    const existingPassenger = await prisma.passengerDetails.findUnique({
       where: { email },
     });
 
-    if (existingGuest) {
+    const existingDriver = await prisma.driverDetails.findUnique({
+      where: { email },
+    });
+
+    if (existingPassenger) {
       return {
-        error: "Email already exists.",
+        error: "Email already exists. Login instead",
+      };
+    } else if (existingDriver) {
+      return {
+        error: "Driver account found for this email. Use a different email.",
       };
     }
 
@@ -92,13 +100,21 @@ export async function joinDriver(formdata: FormData) {
 
   try {
     // Check if the email already exists
-    const existingGuest = await prisma.driverDetails.findUnique({
+    const existingDriver = await prisma.driverDetails.findUnique({
       where: { email },
     });
 
-    if (existingGuest) {
+    const existingPassenger = await prisma.driverDetails.findUnique({
+      where: { email },
+    });
+
+    if (existingDriver) {
       return {
-        error: "Email already exists.",
+        error: "Email already exists. Login instead.",
+      };
+    } else if (existingPassenger) {
+      return {
+        error: "Passenger account found for this email. Use a different email.",
       };
     }
 
@@ -109,7 +125,6 @@ export async function joinDriver(formdata: FormData) {
         email: email,
         contact: formdata.get("phone") as string,
         city: formdata.get("city") as string,
-        type: formdata.get("type") as string,
         gender: formdata.get("gender") as string,
         nic: formdata.get("nic") as string,
         dob: formdata.get("dob") as string,
@@ -128,6 +143,53 @@ export async function joinDriver(formdata: FormData) {
   }
 
   revalidatePath("/join");
+}
+
+// create new vehicle
+
+export async function addVehicle(formdata: FormData) {
+  const number = formdata.get("number") as string;
+
+  try {
+    // Check if the email already exists
+    const existingVehicle = await prisma.vehicleDetails.findUnique({
+      where: { number },
+    });
+
+    if (existingVehicle) {
+      return {
+        error: "vehicle already exists.",
+      };
+    }
+
+    // Create a new vehicle
+    await prisma.vehicleDetails.create({
+      data: {
+        number: formdata.get("number") as string,
+        type: formdata.get("type") as string,
+        seatCount: Number(formdata.get("seatCount")),
+        imgUrl1: formdata.get("imgUrl1") as string,
+        imgUrl2: formdata.get("imgUrl2") as string,
+        imgUrl3: formdata.get("imgUrl3") as string,
+        make: formdata.get("make") as string,
+        rateId: formdata.get("rateId") as string,
+        revLicenceUrl: formdata.get("revLicenceUrl") as string,
+        revLicenceExp: formdata.get("revLicenceExp") as string,
+        insuaranceNo: formdata.get("insuaranceNo") as string,
+        insuaranceExp: formdata.get("insuaranceExp") as string,
+        driverId: formdata.get("driverId") as string,
+      },
+    });
+
+    console.log("vehicle created successfully");
+  } catch (error) {
+    console.error("Error creating vehicle:", error);
+    return {
+      error: "Error creating vehicle",
+    };
+  }
+
+  revalidatePath("/driver");
 }
 
 // update guests
@@ -180,20 +242,34 @@ export async function createUser(formdata: FormData) {
         username: formdata.get("username") as string,
         password: hashedPassword,
         type: formdata.get("type") as string,
-        regDate: new Date() as Date,
+        regDate: new Date(),
         guestId: Number(formdata.get("guestId")),
       },
     });
 
-    // Update the guest state to false
-    // await prisma.guest.update({
-    //   where: {
-    //     id: Number(formdata.get("guestId")),
-    //   },
-    //   data: {
-    //     isVerified: true,
-    //   },
-    // });
+    //  Update the verified state
+
+    const userType = formdata.get("type") as string;
+
+    if (userType === "passenger") {
+      await prisma.passengerDetails.update({
+        where: {
+          id: Number(formdata.get("guestId")),
+        },
+        data: {
+          isVerified: true,
+        },
+      });
+    } else if (userType === "driver") {
+      await prisma.driverDetails.update({
+        where: {
+          id: Number(formdata.get("guestId")),
+        },
+        data: {
+          isVerified: true,
+        },
+      });
+    }
 
     console.log("Guest created successfully");
   } catch (error) {

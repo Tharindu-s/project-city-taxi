@@ -9,9 +9,9 @@ interface Guest {
   email: string | null;
   contact: string | null;
   city: string;
-  photoUrl: string | null;
   type: string;
   isVerified: boolean;
+  imgUrl: string | null;
 }
 
 const UserInfo = ({ guest }: { guest: Guest }) => {

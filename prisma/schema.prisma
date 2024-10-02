@@ -117,19 +117,20 @@ model DriverDetails {
 
 // Vehicle Details
 model vehicleDetails {
-  id            Int    @id @default(autoincrement())
-  number        String
+  id            Int     @id @default(autoincrement())
+  number        String  @unique
   type          String
   seatCount     Int
   imgUrl1       String
   imgUrl2       String
   imgUrl3       String
   make          String
-  rateId        String
+  rateId        String?
   revLicenceUrl String
   revLicenceExp String
   insuaranceNo  String
   insuaranceExp String
+  driverId      String
 }
 
 // model Post {
