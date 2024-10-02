@@ -62,12 +62,13 @@ const LocationComponent = () => {
               lng: location.longitude || defaultCenter.lng,
             }}
           >
-            {/* Place a marker at the user's current location */}
+            {/* Highlight marker with BOUNCE animation */}
             <Marker
               position={{
                 lat: location.latitude,
                 lng: location.longitude,
               }}
+              animation={window.google.maps.Animation.BOUNCE} // Animation applied to marker
             />
           </GoogleMap>
         </div>
