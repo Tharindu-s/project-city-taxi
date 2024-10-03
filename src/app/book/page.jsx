@@ -5,7 +5,8 @@ import { FaLocationArrow, FaTimes } from "react-icons/fa";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import { useRef, useState } from "react";
 import "./style.css";
-import Map from "@/components/common/Map";
+import Map from "@/components/common/MapPassenger";
+import { IoMdLocate } from "react-icons/io";
 
 const center = { lat: 6.9271, lng: 79.8612 };
 const countryCode = "LK";
@@ -13,7 +14,7 @@ const countryCode = "LK";
 export default function Contact() {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY,
-    libraries: ["places"],
+    libraries: ["places", "geocoding"],
   });
 
   const [map, setMap] = useState(null);
@@ -68,8 +69,39 @@ export default function Contact() {
     return 0;
   }
 
+  // New function to get current location
+  function getCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          // Reverse geocode the lat/lng to get a human-readable address
+          const geocoder = new google.maps.Geocoder();
+          const latlng = {
+            lat: latitude,
+            lng: longitude,
+          };
+
+          geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === "OK" && results[0]) {
+              originRef.current.value = results[0].formatted_address;
+            } else {
+              alert("Unable to retrieve your location");
+            }
+          });
+        },
+        () => {
+          alert("Error getting location. Please try again.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
   return (
-    <>
+    <div>
       <Layout
         headerStyle={1}
         footerStyle={1}
@@ -78,50 +110,28 @@ export default function Contact() {
         breadcrumbTitle={null}
       >
         <div>
-          <section className="contact-section fix section-padding">
+          <section className="contact-section fix py-12">
             <div className="container">
+              <div className="mb-8">
+                <h2>Book a ride</h2>
+                <p className="pt-2">
+                  Locate yourself, pick a location, choose a location and
+                  confirm your ride.
+                </p>
+              </div>
               <div className="contact-wrapper-2">
                 <div className="row g-4 align-items-center">
                   <div className="col-lg-6">
-                    <div
-                      style={{
-                        height: "50vh",
-                        width: "100%",
-                        position: "relative",
-                      }}
-                    >
-                      <div
-                        style={{
-                          height: "100%",
-                          width: "100%",
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                        }}
-                      >
+                    <div className="h-[50vh] w-full relative">
+                      <div className="h-full w-full absolute top-0 left-0">
                         <Map
                           directionsResponse={directionsResponse}
                           setMap={setMap}
                         />
                       </div>
 
-                      <div
-                        style={{
-                          position: "absolute",
-                          padding: "16px",
-                          backgroundColor: "white",
-                          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                          zIndex: 1,
-                        }}
-                        className="mx-3 my-3"
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "8px",
-                            justifyContent: "space-between",
-                          }}
-                        >
+                      <div className="absolute p-4 bg-white shadow-md z-10 mx-3 my-3">
+                        <div className="flex gap-2 justify-between">
                           <div style={{ flexGrow: 1 }}>
                             <Autocomplete
                               onLoad={(autocomplete) =>
@@ -134,32 +144,17 @@ export default function Contact() {
                               <input
                                 type="text"
                                 placeholder="Where from"
-                                className="text-black"
                                 ref={originRef}
-                                style={{
-                                  width: "100%",
-                                  padding: "8px",
-                                  border: "1px solid #ccc",
-                                }}
+                                className="w-full p-2 border border-gray-300 text-black"
                               />
                             </Autocomplete>
                           </div>
-
-                          <div style={{ display: "flex", gap: "4px" }}>
-                            <button
-                              onClick={calculateRoute}
-                              style={{
-                                backgroundColor: "#e89d04",
-                                color: "white",
-                                padding: "8px 16px",
-                                border: "none",
-                                cursor: "pointer",
-                              }}
-                            >
-                              test
-                            </button>
-                            
-                          </div>
+                          <button
+                            onClick={getCurrentLocation}
+                            className="bg-[#e89d04] text-white px-4 py-2 border-none cursor-pointer"
+                          >
+                            <IoMdLocate />
+                          </button>
 
                           <div style={{ flexGrow: 1 }}>
                             <Autocomplete
@@ -173,50 +168,33 @@ export default function Contact() {
                               <input
                                 type="text"
                                 placeholder="Where to"
-                                className="text-black"
                                 ref={destinationRef}
-                                style={{
-                                  width: "100%",
-                                  padding: "8px",
-                                  border: "1px solid #ccc",
-                                }}
+                                className="w-full p-2 border border-gray-300 text-black"
                               />
                             </Autocomplete>
                           </div>
-                          <div style={{ display: "flex", gap: "4px" }}>
+                          <div className="flex gap-1">
+                            {/* New Button to get current location */}
+
                             <button
                               onClick={calculateRoute}
-                              style={{
-                                backgroundColor: "#e89d04",
-                                color: "white",
-                                padding: "8px 16px",
-                                border: "none",
-                                cursor: "pointer",
-                              }}
+                              className="bg-[#e89d04] text-white px-4 py-2 border-none cursor-pointer"
                             >
                               Calculate
                             </button>
+                          </div>
+
+                          <div className="flex gap-1">
                             <button
                               onClick={clearRoute}
-                              style={{
-                                backgroundColor: "transparent",
-                                border: "none",
-                                cursor: "pointer",
-                              }}
+                              className="bg-transparent border-none cursor-pointer"
                             >
                               <FaTimes />
                             </button>
                           </div>
                         </div>
 
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "16px",
-                            marginTop: "16px",
-                            justifyContent: "space-between",
-                          }}
-                        >
+                        <div className="flex gap-4 mt-4 justify-between">
                           <span>Distance: {distance} </span>
                           <span>Duration: {duration} </span>
                           <button
@@ -224,11 +202,7 @@ export default function Contact() {
                               map.panTo(center);
                               map.setZoom(15);
                             }}
-                            style={{
-                              backgroundColor: "transparent",
-                              border: "none",
-                              cursor: "pointer",
-                            }}
+                            className="bg-transparent border-none cursor-pointer"
                           >
                             <FaLocationArrow />
                           </button>
@@ -236,6 +210,7 @@ export default function Contact() {
                       </div>
                     </div>
                   </div>
+
                   <div className="col-lg-6">
                     <div className="contact-content">
                       <form
@@ -244,10 +219,6 @@ export default function Contact() {
                         className="contact-form-items"
                       >
                         <div className="row g-4">
-                          <div
-                            className="col-lg-6 wow fadeInUp"
-                            data-wow-delay=".3s"
-                          ></div>
                           <span>Select an option:</span>
                           <div
                             className="col-lg-12 wow fadeInUp  flex flex-wrap"
@@ -283,16 +254,12 @@ export default function Contact() {
                               </div>
                             ))}
                           </div>
-                          <div
-                            className="col-lg-7 wow fadeInUp"
-                            data-wow-delay=".9s"
-                          >
-                            <p>Total: {calculateTotal()} </p>
-                            <button type="submit" className="theme-btn">
-                              Book now
-                              <i className="fa-solid fa-arrow-right-long" />
-                            </button>
-                          </div>
+                        </div>
+
+                        <div className="mt-4 p-3 bg-gray-100 rounded-lg">
+                          <p>
+                            <strong>Total Cost:</strong> {calculateTotal()} LKR
+                          </p>
                         </div>
                       </form>
                     </div>
@@ -303,6 +270,6 @@ export default function Contact() {
           </section>
         </div>
       </Layout>
-    </>
+    </div>
   );
 }

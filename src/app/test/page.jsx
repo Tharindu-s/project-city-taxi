@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from 'react';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import React, { useState } from "react";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 const mapContainerStyle = {
   height: "400px",
@@ -47,7 +47,7 @@ const LocationComponent = () => {
     <div>
       <h1>Get Current Location</h1>
       <button onClick={getLocation}>Get Location</button>
-      
+
       {location.latitude && location.longitude ? (
         <div>
           <h3>Latitude: {location.latitude}</h3>
@@ -62,13 +62,12 @@ const LocationComponent = () => {
               lng: location.longitude || defaultCenter.lng,
             }}
           >
-            {/* Highlight marker with BOUNCE animation */}
+            {/* Place a marker at the user's current location */}
             <Marker
               position={{
                 lat: location.latitude,
                 lng: location.longitude,
               }}
-              animation={window.google.maps.Animation.BOUNCE} // Animation applied to marker
             />
           </GoogleMap>
         </div>
