@@ -76,8 +76,8 @@ const DriverJoin = () => {
       >
         <Link href="/driver-join">
           <button className="btn">
-            <i className="animation"></i>Join as a passenger
-            <i className="animation"></i>
+            <i className="animation"></i>Join as a passenger{" "}
+            <i className="animation"></i>{" "}
           </button>
         </Link>
       </div>

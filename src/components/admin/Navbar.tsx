@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Hero1() {
   return (
-    <>
+    <div>
       <section
         className="hero-section fix hero-1 bg-cover"
         style={{ backgroundImage: 'url("assets/img/hero/hero-bg.jpg")' }}
@@ -43,8 +43,7 @@ export default function Hero1() {
                     className="theme-btn wow fadeInUp"
                     data-wow-delay=".8s"
                   >
-                    Book now
-                    <i className="fa-solid fa-arrow-right-long" />
+                    Book now <i className="fa-solid fa-arrow-right-long" />
                   </Link>
                 </div>
               </div>
@@ -57,6 +56,6 @@ export default function Hero1() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

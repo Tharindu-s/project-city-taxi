@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Cta1() {
   return (
-    <>
+    <div>
       <section className="cta-section">
         <div className="container">
           <div className="cta-wrapper">
@@ -24,13 +24,12 @@ export default function Cta1() {
                 className="theme-btn bg-white wow fadeInUp"
                 data-wow-delay=".7s"
               >
-                Book now
-                <i className="fa-solid fa-arrow-right-long" />
+                Book now <i className="fa-solid fa-arrow-right-long" />
               </Link>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

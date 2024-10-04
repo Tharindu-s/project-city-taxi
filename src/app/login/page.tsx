@@ -89,9 +89,9 @@ export default function LoginPage() {
                             data-wow-delay=".9s"
                           >
                             <button type="submit" className="theme-btn">
-                              Login
+                              Login{" "}
                               <i className="fa-solid fa-arrow-right-long" />
-                            </button>
+                            </button>{" "}
                           </div>
                         </div>
                       </form>

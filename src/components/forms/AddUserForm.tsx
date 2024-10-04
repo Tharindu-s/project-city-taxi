@@ -77,7 +77,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             type="text"
             name="guestId"
             id="guestId"
-            defaultValue={guestId || ""}
+            defaultValue={guestId ?? ""}
           />
         </div>
         <div className="form-clt my-4 hidden">
@@ -85,7 +85,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             type="text"
             name="email"
             id="email"
-            defaultValue={guestEmail || ""}
+            defaultValue={guestEmail ?? ""}
           />
         </div>
         <div className="form-clt my-4 hidden">
@@ -93,7 +93,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             type="text"
             name="type"
             id="type"
-            defaultValue={guestType || ""}
+            defaultValue={guestType ?? ""}
           />
         </div>
         <div className="form-clt my-4">
@@ -126,8 +126,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
 
         <div className="col-lg-7 wow fadeInUp my-8" data-wow-delay=".9s">
           <button type="submit" className="theme-btn">
-            Create
-            <i className="fa-solid fa-arrow-right-long" />
+            Create <i className="fa-solid fa-arrow-right-long" />{" "}
           </button>
         </div>
       </form>

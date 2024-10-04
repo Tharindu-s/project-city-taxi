@@ -1,5 +1,4 @@
 import React from "react";
-import VehicleCard from "./VehicleCard";
 import Link from "next/link";
 
 interface Vehicle {
@@ -37,8 +36,7 @@ const VehicleList = ({ vehiclesList }: VehicleListProps) => {
             <p>{vehicle.make}</p>
             <p>{vehicle.seatCount} Seats</p>
             <Link href="/service-details" className="theme-btn-2 mt-3">
-              Manage Vehicle
-              <i className="fa-solid fa-arrow-right-long" />
+              Manage Vehicle <i className="fa-solid fa-arrow-right-long" />{" "}
             </Link>
           </div>
         </div>

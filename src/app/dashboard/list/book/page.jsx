@@ -323,8 +323,8 @@ export default function Contact() {
                               data-wow-delay=".9s"
                             >
                               <button type="submit" className="theme-btn">
-                                Confirm the ride
-                                <i className="fa-solid fa-arrow-right-long" />
+                                Confirm the ride{" "}
+                                <i className="fa-solid fa-arrow-right-long" />{" "}
                               </button>
                             </div>
                           </div>

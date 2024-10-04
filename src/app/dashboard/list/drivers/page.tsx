@@ -16,8 +16,8 @@ export default async function TableDemo() {
   });
 
   return (
-    <>
+    <div>
       <UsersTable users={guests} usertype="drivers" />
-    </>
+    </div>
   );
 }

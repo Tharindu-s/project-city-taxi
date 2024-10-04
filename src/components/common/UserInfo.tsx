@@ -54,7 +54,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         type="text"
                         name="id"
                         id="id"
-                        defaultValue={guest?.id || ""}
+                        defaultValue={guest?.id ?? ""}
                         placeholder="Your Name"
                         disabled
                       />
@@ -65,7 +65,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         type="text"
                         name="name"
                         id="name"
-                        defaultValue={guest?.name || ""}
+                        defaultValue={guest?.name ?? ""}
                         placeholder="Your Name"
                         disabled
                       />
@@ -76,7 +76,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         type="text"
                         name="email"
                         id="email"
-                        defaultValue={guest?.email || ""}
+                        defaultValue={guest?.email ?? ""}
                         placeholder="Your Email"
                         disabled
                       />
@@ -87,7 +87,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         type="text"
                         name="phone"
                         id="phone"
-                        defaultValue={guest?.contact || ""}
+                        defaultValue={guest?.contact ?? ""}
                         placeholder="Your Phone"
                         disabled
                       />
@@ -98,7 +98,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         type="text"
                         name="city"
                         id="city"
-                        defaultValue={guest?.city || ""}
+                        defaultValue={guest?.city ?? ""}
                         placeholder="Your City"
                         disabled
                       />

@@ -1,8 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import Image from "next/image";
-import Link from "next/link";
 import img from "../../../public/assets/img/join.svg";
-import prisma from "@/lib/db";
 import PassengerJoin from "@/components/forms/PassengerJoin";
 import React from "react";
 
@@ -50,24 +48,6 @@ export default async function Contact() {
                 </div>
               </div>
             </div>
-            {/* <div className="container">
-              {" "}
-              <div className="col-lg-6 align-items-center">
-                {guests.map((guest) => (
-                  <Link href={`/join/${guest.id}`} key={guest.id}>
-                    <div className="col-lg-2">
-                      <h3>{guest.name}</h3>
-                      <h3>{guest.email}</h3>
-                      <h3>{guest.phone}</h3>
-                      <h4>{guest.city}</h4>
-                      <button>edit</button>
-                      <br />
-                      <button>delete</button>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div> */}
           </section>
         </div>
       </Layout>

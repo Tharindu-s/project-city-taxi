@@ -10,7 +10,7 @@ export default function MobileMenu() {
   };
 
   return (
-    <>
+    <div>
       <div className="mobile-menu fix mb-3 mean-container">
         <div className="mean-bar">
           <Link
@@ -28,8 +28,7 @@ export default function MobileMenu() {
             <ul>
               <li className="has-dropdown active menu-thumb">
                 <Link href="/">
-                  Home
-                  <i className="fas fa-angle-down" />
+                  Home <i className="fas fa-angle-down" />
                 </Link>
                 <ul
                   className="submenu has-homemenu"
@@ -62,8 +61,7 @@ export default function MobileMenu() {
               </li>
               <li>
                 <Link href="/news">
-                  Services
-                  <i className="fas fa-angle-down" />
+                  Services <i className="fas fa-angle-down" />
                 </Link>
                 <ul
                   className="submenu"
@@ -90,8 +88,7 @@ export default function MobileMenu() {
               </li>
               <li className="has-dropdown">
                 <Link href="/news">
-                  Pages
-                  <i className="fas fa-angle-down" />
+                  Pages <i className="fas fa-angle-down" />
                 </Link>
                 <ul
                   className="submenu"
@@ -136,8 +133,7 @@ export default function MobileMenu() {
               </li>
               <li>
                 <Link href="/news">
-                  Blog
-                  <i className="fas fa-angle-down" />
+                  Blog <i className="fas fa-angle-down" />
                 </Link>
                 <ul
                   className="submenu"
@@ -169,6 +165,6 @@ export default function MobileMenu() {
           </nav>
         </div>
       </div>
-    </>
+    </div>
   );
 }

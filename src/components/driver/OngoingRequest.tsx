@@ -18,7 +18,10 @@ const OngoingRequest = ({ ongoingRequests }: any) => {
         </h2>
       </div>
       {ongoingRequests.map((ride: any) => (
-        <Card className="shadow-none rounded-none mx-auto my-4 w-[90%] 2xl:w-[50%]">
+        <Card
+          className="shadow-none rounded-none mx-auto my-4 w-[90%] 2xl:w-[50%]"
+          key={ride.id}
+        >
           <CardHeader>
             <CardTitle>Card Title</CardTitle>
             <CardDescription>Card Description</CardDescription>

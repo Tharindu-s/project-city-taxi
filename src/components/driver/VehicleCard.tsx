@@ -1,4 +1,3 @@
-import prisma from "@/lib/db";
 import Link from "next/link";
 import React from "react";
 
@@ -14,8 +13,7 @@ export default async function VehicleCard() {
         </h4>
         <p>Mauris ultrices ligula eget volutpat aliquet nullam</p>
         <Link href="/service-details" className="theme-btn-2 mt-3">
-          read More
-          <i className="fa-solid fa-arrow-right-long" />
+          read More <i className="fa-solid fa-arrow-right-long" />{" "}
         </Link>
       </div>
     </div>

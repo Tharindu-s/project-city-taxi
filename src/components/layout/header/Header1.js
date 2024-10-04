@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Menu from "../Menu";
 import OnePageNav from "../OnePageNav";
 import Image from "next/image";
 import logo from "../../../../public/assets/img/logo/logo black.png";
@@ -11,7 +10,7 @@ export default function Header1({
   onePageNav,
 }) {
   return (
-    <>
+    <div>
       <header>
         <div
           id="header-sticky"
@@ -45,8 +44,7 @@ export default function Header1({
                   <div className="header-button">
                     <Link href="/book" className="theme-btn">
                       <span>
-                        Book
-                        <i className="fa-solid fa-arrow-right-long" />
+                        Book <i className="fa-solid fa-arrow-right-long" />
                       </span>
                     </Link>
                   </div>
@@ -61,6 +59,6 @@ export default function Header1({
           </div>
         </div>
       </header>
-    </>
+    </div>
   );
 }

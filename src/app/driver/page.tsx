@@ -124,9 +124,9 @@ export default async function DriverPage() {
                     marginTop: "30px",
                   }}
                 >
-                  Add a new vehicle
+                  Add a new vehicle{" "}
                   <i className="fa-solid fa-arrow-right-long" />
-                </button>
+                </button>{" "}
               </Link>
             ) : (
               <VehicleList vehiclesList={vehiclesList} />

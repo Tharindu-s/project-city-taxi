@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Menu() {
   return (
-    <>
+    <div>
       <ul>
         <li className="has-dropdown active menu-thumb">
           <Link href="/">Home</Link>
@@ -12,8 +12,7 @@ export default function Menu() {
         </li>
         <li>
           <Link href="/news">
-            Services
-            <i className="fas fa-angle-down ps-1" />
+            Services <i className="fas fa-angle-down ps-1" />
           </Link>
           <ul className="submenu">
             <li>
@@ -31,6 +30,6 @@ export default function Menu() {
           <Link href="/contact">Contact</Link>
         </li>
       </ul>
-    </>
+    </div>
   );
 }

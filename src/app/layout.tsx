@@ -8,7 +8,7 @@ import "/public/assets/css/meanmenu.css";
 import "/public/assets/css/swiper-bundle.min.css";
 import "/public/assets/css/nice-select.css";
 import "/public/assets/css/main.css";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { Kumbh_Sans } from "next/font/google";
 import { LocationProvider } from "../context/LocationContext";
 

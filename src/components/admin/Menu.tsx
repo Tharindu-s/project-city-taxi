@@ -1,4 +1,3 @@
-import { role } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import homeIcon from "../../../public/assets/img/dashboard/icons8-home-144.png";

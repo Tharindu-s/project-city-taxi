@@ -4,7 +4,7 @@ import logo from "../../../../public/assets/img/logo/logo white.png";
 
 export default function Footer1() {
   return (
-    <>
+    <div>
       <footer className="footer-section">
         <div className="footer-widgets-wrapper footer-bg">
           <div className="shape-1">
@@ -63,20 +63,21 @@ export default function Footer1() {
                     <ul className="list-area">
                       <li>
                         <Link href="/">
+                          {" "}
                           <i className="fa-solid fa-chevron-right" />
-                          Home
+                          Home{" "}
                         </Link>
                       </li>
                       <li>
                         <Link href="/service">
+                          {" "}
                           <i className="fa-solid fa-chevron-right" />
-                          Book now
+                          Book now{" "}
                         </Link>
                       </li>
                     </ul>
                     <Link href="/book" className="theme-btn hover-white mt-4">
-                      Book now
-                      <i className="fa-solid fa-arrow-right-long" />
+                      Book now <i className="fa-solid fa-arrow-right-long" />{" "}
                     </Link>
                   </div>
                 </div>
@@ -106,6 +107,6 @@ export default function Footer1() {
           </Link>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

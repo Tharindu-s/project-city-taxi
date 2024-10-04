@@ -33,7 +33,7 @@ export default function Layout({
     });
   }, []);
   return (
-    <>
+    <div>
       <Offcanvas isOffCanvas={isOffCanvas} handleOffCanvas={handleOffCanvas} />
 
       {headerStyle == 1 ? (
@@ -53,6 +53,6 @@ export default function Layout({
       {footerStyle == 1 ? <Footer1 /> : null}
 
       <BackToTop />
-    </>
+    </div>
   );
 }

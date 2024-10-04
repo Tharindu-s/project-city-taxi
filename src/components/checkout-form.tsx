@@ -87,8 +87,7 @@ export function CheckoutFormComponent() {
         </CardContent>
         <CardFooter>
           <button type="submit" className="theme-btn">
-            Confirm payment
-            <i className="fa-solid fa-arrow-right-long" />
+            Confirm payment <i className="fa-solid fa-arrow-right-long" />
           </button>
         </CardFooter>
       </form>

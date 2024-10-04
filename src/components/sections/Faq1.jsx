@@ -2,7 +2,7 @@ import Accordion1 from "../elements/Accordion1";
 
 export default function Faq1() {
   return (
-    <>
+    <div>
       <section className="faq-section fix section-padding faq-margin">
         <div className="right-shape">
           <img src="/assets/img/faq/right-shape.png" alt="shape-img" />
@@ -38,6 +38,6 @@ export default function Faq1() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
