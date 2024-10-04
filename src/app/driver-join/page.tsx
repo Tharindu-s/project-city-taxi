@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import Image from "next/image";
-import img from "../../../public/assets/img/join.jpg";
+import img from "../../../public/assets/img/join.svg";
 import React from "react";
 import DriverJoin from "@/components/forms/DriverJoin";
 
@@ -30,6 +30,7 @@ export default async function Contact() {
                             height={600}
                             width={600}
                             alt="join img"
+                            className="md:p-12"
                           />
                         </div>
                       </div>

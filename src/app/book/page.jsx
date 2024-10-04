@@ -66,7 +66,7 @@ export default function Contact() {
       const totalCost = selectedVehicle.rate * distanceValue;
       return totalCost.toFixed(2);
     }
-    return 0;
+    return "0";
   }
 
   // New function to get current location
@@ -82,6 +82,8 @@ export default function Contact() {
             lat: latitude,
             lng: longitude,
           };
+
+          console.log(latlng);
 
           geocoder.geocode({ location: latlng }, (results, status) => {
             if (status === "OK" && results[0]) {
@@ -199,8 +201,8 @@ export default function Contact() {
                           <span>Duration: {duration} </span>
                           <button
                             onClick={() => {
-                              map.panTo(center);
-                              map.setZoom(15);
+                              map?.panTo(center);
+                              map?.setZoom(15);
                             }}
                             className="bg-transparent border-none cursor-pointer"
                           >

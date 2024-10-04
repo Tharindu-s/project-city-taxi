@@ -1,8 +1,35 @@
 import AddVehicle from "@/components/forms/AddVehicle";
 import Layout from "@/components/layout/Layout";
+import { getUserByEmail } from "@/lib/auth";
 import React from "react";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export default async function AddVehicles() {
+  const token = cookies().get("token")?.value;
+
+  if (!token) {
+    return <div>Access Denied</div>;
+  }
+
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(token, JWT_SECRET ?? "");
+  } catch (error) {
+    console.error("Invalid token:", error);
+    return <div>Access Denied</div>;
+  }
+
+  const { email, type } = decodedToken as { email: string; type: string };
+
+  if (type !== "driver") {
+    return <div>Access Denied</div>;
+  }
+
+  const user = await getUserByEmail(email);
+
   return (
     <div>
       <Layout
@@ -17,7 +44,11 @@ export default async function AddVehicles() {
               <div className="contact-wrapper-2">
                 <div className="row g-4 align-items-center">
                   <div className="col-lg-6">
-                    <AddVehicle />
+                    {user ? (
+                      <AddVehicle driverId={user.guestId.toString()} />
+                    ) : (
+                      <div>User not found</div>
+                    )}
                   </div>
                   <div className="col-lg-6">
                     <div className="map-section">

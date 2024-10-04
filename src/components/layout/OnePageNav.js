@@ -31,9 +31,7 @@ export default function OnePageNav() {
         <li>
           <Link href="/">Home</Link>
         </li>
-        <li>
-          <Link href="/book">Book now</Link>
-        </li>
+
         {!user && (
           <li>
             <Link href="/join">Join</Link>

@@ -28,7 +28,9 @@
     ".next/types/**/*.ts",
     "src/app/maptest/page.jsx",
     "src/app/book/page.jsx",
-    "src/app/dashboard/list/book/page.jsx"
+    "src/app/dashboard/list/book/page.jsx",
+    "src/components/driver/GetCurrentLocation.tsx",
+    "src/context/LocationContext.jsx"
   ],
   "exclude": ["node_modules"]
 }

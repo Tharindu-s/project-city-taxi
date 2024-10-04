@@ -43,7 +43,7 @@ export default function Header1({
                   </div>
 
                   <div className="header-button">
-                    <Link href="/contact" className="theme-btn">
+                    <Link href="/book" className="theme-btn">
                       <span>
                         Book
                         <i className="fa-solid fa-arrow-right-long" />

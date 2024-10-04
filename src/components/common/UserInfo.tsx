@@ -9,9 +9,9 @@ interface Guest {
   email: string | null;
   contact: string | null;
   city: string;
-  type: string;
   isVerified: boolean;
-  imgUrl: string | null;
+  type: string;
+  imgUrl?: string | null;
 }
 
 const UserInfo = ({ guest }: { guest: Guest }) => {
@@ -48,7 +48,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                   )}
 
                   <form className="contact-form-items">
-                    <div className="form-clt">
+                    <div className="form-clt my-4">
                       <span>ID</span>
                       <input
                         type="text"
@@ -59,7 +59,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         disabled
                       />
                     </div>
-                    <div className="form-clt">
+                    <div className="form-clt my-4">
                       <span>Your name*</span>
                       <input
                         type="text"
@@ -70,7 +70,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         disabled
                       />
                     </div>
-                    <div className="form-clt">
+                    <div className="form-clt my-4">
                       <span>Your Email*</span>
                       <input
                         type="text"
@@ -81,7 +81,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         disabled
                       />
                     </div>
-                    <div className="form-clt">
+                    <div className="form-clt my-4">
                       <span>Your Phone*</span>
                       <input
                         type="text"
@@ -92,7 +92,7 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         disabled
                       />
                     </div>
-                    <div className="form-clt">
+                    <div className="form-clt my-4">
                       <span>Your City*</span>
                       <input
                         type="text"

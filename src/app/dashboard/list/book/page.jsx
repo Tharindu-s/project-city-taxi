@@ -66,11 +66,11 @@ export default function Contact() {
       const totalCost = selectedVehicle.rate * distanceValue; // Calculate total cost based on vehicle rate
       return totalCost.toFixed(2); // Return formatted total cost
     }
-    return 0; // Return 0 if no vehicle is selected or distance is not available
+    return "0"; // Return 0 if no vehicle is selected or distance is not available
   }
 
   return (
-    <>
+    <div>
       <div>
         <h1 className="font-bold text-3xl ml-14">
           Book a ride for unregistered users
@@ -203,8 +203,8 @@ export default function Contact() {
                         <span>Duration: {duration} </span>
                         <button
                           onClick={() => {
-                            map.panTo(center);
-                            map.setZoom(15);
+                            map?.panTo(center);
+                            map?.setZoom(15);
                           }}
                           style={{
                             backgroundColor: "transparent",
@@ -323,7 +323,7 @@ export default function Contact() {
                               data-wow-delay=".9s"
                             >
                               <button type="submit" className="theme-btn">
-                                Submit
+                                Confirm the ride
                                 <i className="fa-solid fa-arrow-right-long" />
                               </button>
                             </div>
@@ -346,6 +346,6 @@ export default function Contact() {
           </div>
         </section>
       </div>
-    </>
+    </div>
   );
 }

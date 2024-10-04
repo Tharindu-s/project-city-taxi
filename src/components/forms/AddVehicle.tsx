@@ -22,7 +22,7 @@ const vehicleSchema = z.object({
   driverId: z.string(),
 });
 
-const AddVehicle = () => {
+const AddVehicle = ({ driverId }: { driverId: string }) => {
   async function clientAction(formdata: FormData) {
     // construct a new user object
 
@@ -229,6 +229,8 @@ const AddVehicle = () => {
                 name="driverId"
                 id="driverId"
                 placeholder="Photo"
+                className="hidden"
+                defaultValue={driverId}
               />
             </div>
           </div>

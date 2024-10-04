@@ -90,8 +90,8 @@ model PassengerDetails {
   userId     Int?    @unique
   city       String
   photoUrl   String
-  type       String  @default("passenger")
   gender     String
+  type       String  @default("passenger")
   isVerified Boolean @default(false)
 }
 
@@ -108,11 +108,12 @@ model DriverDetails {
   imgUrl     String
   contact    String
   licenceNo  String
-  vehicleId  String[]
+  vehicleId  String?
   type       String   @default("driver")
   gender     String
   userId     Int?     @unique
   isVerified Boolean  @default(false)
+  location   String?
 }
 
 // Vehicle Details

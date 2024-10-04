@@ -26,6 +26,7 @@ interface UsersTableProps {
 const UsersTable = ({ users, usertype }: UsersTableProps) => {
   return (
     <div className="m-6">
+      <h2 className="mb-8 font-bold text-3xl">Manage users</h2>
       <Table className="p-6">
         <TableHeader>
           <TableRow>

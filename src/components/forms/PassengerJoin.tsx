@@ -58,7 +58,7 @@ const PassengerJoin = () => {
 
   return (
     <div className="contact-content">
-      <h2>Want to join City Taxi?</h2>
+      <h2>Want to join City Taxi as a passenger?</h2>
       <p>
         Fill the below form and we will provide you a new account to join City
         Taxi.

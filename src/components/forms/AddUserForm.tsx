@@ -13,12 +13,12 @@ const userSchema = z
       .string()
       .min(4, { message: "Username must be at least 4 characters long" })
       .max(15, { message: "Username must not exceed 15 characters" }),
+    type: z.string(),
     password: z
       .string()
       .min(4, { message: "Password must be at least 4 characters long" })
       .max(15, { message: "Password must not exceed 15 characters" }),
     confirmPassword: z.string(),
-    type: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -41,6 +41,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
       password: formdata.get("password") as string,
       confirmPassword: formdata.get("confirmPassword") as string,
       type: formdata.get("type") as string,
+      imgUrl: "testImg",
     };
 
     // validation
@@ -71,7 +72,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
         Check the provided details and create a new account
       </p>
       <form action={clientAction} className="contact-form-items">
-        <div className="form-clt">
+        <div className="form-clt my-4 hidden">
           <input
             type="text"
             name="guestId"
@@ -79,7 +80,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             defaultValue={guestId || ""}
           />
         </div>
-        <div className="form-clt">
+        <div className="form-clt my-4 hidden">
           <input
             type="text"
             name="email"
@@ -87,7 +88,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             defaultValue={guestEmail || ""}
           />
         </div>
-        <div className="form-clt">
+        <div className="form-clt my-4 hidden">
           <input
             type="text"
             name="type"
@@ -95,7 +96,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             defaultValue={guestType || ""}
           />
         </div>
-        <div className="form-clt">
+        <div className="form-clt my-4">
           <span>Username*</span>
           <input
             type="text"
@@ -104,7 +105,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             placeholder="username"
           />
         </div>
-        <div className="form-clt">
+        <div className="form-clt my-4">
           <span>Password*</span>
           <input
             type="text"
@@ -113,7 +114,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             placeholder="password"
           />
         </div>
-        <div className="form-clt">
+        <div className="form-clt my-4">
           <span>Confirm Password*</span>
           <input
             type="text"
@@ -123,7 +124,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
           />
         </div>
 
-        <div className="col-lg-7 wow fadeInUp" data-wow-delay=".9s">
+        <div className="col-lg-7 wow fadeInUp my-8" data-wow-delay=".9s">
           <button type="submit" className="theme-btn">
             Create
             <i className="fa-solid fa-arrow-right-long" />

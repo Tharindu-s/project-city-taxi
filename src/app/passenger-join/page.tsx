@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import Image from "next/image";
 import Link from "next/link";
-import img from "../../../public/assets/img/join.jpg";
+import img from "../../../public/assets/img/join.svg";
 import prisma from "@/lib/db";
 import PassengerJoin from "@/components/forms/PassengerJoin";
 import React from "react";
@@ -41,6 +41,7 @@ export default async function Contact() {
                             height={600}
                             width={600}
                             alt="join img"
+                            className="md:p-12"
                           />
                         </div>
                       </div>

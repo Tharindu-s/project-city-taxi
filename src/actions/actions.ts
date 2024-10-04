@@ -3,46 +3,9 @@
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcrypt";
-
-// create guest
-
-// export async function createGuest(formdata: FormData) {
-//   const email = formdata.get("email") as string;
-
-//   try {
-//     // Check if the email already exists
-//     const existingGuest = await prisma.guest.findUnique({
-//       where: { email },
-//     });
-
-//     if (existingGuest) {
-//       return {
-//         error: "Email already exists.",
-//       };
-//     }
-
-//     // Create the new guest if the email doesn't exist
-//     await prisma.guest.create({
-//       data: {
-//         name: formdata.get("name") as string,
-//         email: email,
-//         phone: formdata.get("phone") as string,
-//         city: formdata.get("city") as string,
-//         type: formdata.get("type") as string,
-//         gender: formdata.get("gender") as string,
-//       },
-//     });
-
-//     console.log("Guest created successfully");
-//   } catch (error) {
-//     console.error("Error creating guest:", error);
-//     return {
-//       error: "Error adding user",
-//     };
-//   }
-
-//   revalidatePath("/join");
-// }
+import nodemailer from "nodemailer";
+import fs from "fs";
+import path from "path";
 
 // create passenger guest
 
@@ -76,7 +39,6 @@ export async function joinPassenger(formdata: FormData) {
         email: email,
         contact: formdata.get("phone") as string,
         city: formdata.get("city") as string,
-        type: formdata.get("type") as string,
         gender: formdata.get("gender") as string,
         photoUrl: formdata.get("photoUrl") as string,
       },
@@ -151,19 +113,19 @@ export async function addVehicle(formdata: FormData) {
   const number = formdata.get("number") as string;
 
   try {
-    // Check if the email already exists
+    // Check if the vehicle already exists
     const existingVehicle = await prisma.vehicleDetails.findUnique({
       where: { number },
     });
 
     if (existingVehicle) {
       return {
-        error: "vehicle already exists.",
+        error: "Vehicle already exists.",
       };
     }
 
-    // Create a new vehicle
-    await prisma.vehicleDetails.create({
+    // Create a new vehicle and retrieve its ID
+    const newVehicle = await prisma.vehicleDetails.create({
       data: {
         number: formdata.get("number") as string,
         type: formdata.get("type") as string,
@@ -179,58 +141,34 @@ export async function addVehicle(formdata: FormData) {
         insuaranceExp: formdata.get("insuaranceExp") as string,
         driverId: formdata.get("driverId") as string,
       },
+      select: {
+        id: true,
+      },
     });
 
-    console.log("vehicle created successfully");
+    // Now update the driver table with the created vehicle ID
+    await prisma.driverDetails.update({
+      where: {
+        id: Number(formdata.get("driverId")),
+      },
+      data: {
+        vehicleId: newVehicle.id.toString(),
+      },
+    });
+
+    console.log("Vehicle created and assigned to driver successfully");
   } catch (error) {
-    console.error("Error creating vehicle:", error);
+    console.error("Error creating vehicle or assigning to driver:", error);
     return {
-      error: "Error creating vehicle",
+      error: "Error creating vehicle or assigning to driver",
     };
   }
 
   revalidatePath("/driver");
 }
 
-// update guests
-
-// export async function editGuest(formdata: FormData) {
-//   const guestId = formdata.get("id") as string;
-//   try {
-//     await prisma.guest.update({
-//       where: {
-//         id: Number(guestId),
-//       },
-//       data: {
-//         name: formdata.get("name") as string,
-//         email: formdata.get("email") as string,
-//         phone: formdata.get("phone") as string,
-//         city: formdata.get("city") as string,
-//       },
-//     });
-//   } catch (error) {
-//     console.error("Error updating guest:", error);
-//   }
-//   revalidatePath("/join/[id]");
-// }
-
-// delete guests
-
-// export async function deleteGuest(id: number) {
-//   try {
-//     await prisma.guest.delete({
-//       where: { id },
-//     });
-//   } catch (error) {
-//     return {
-//       error: "Error deleting user",
-//     };
-//   }
-// }
-
-// create user
-
 export async function createUser(formdata: FormData) {
+  const email = formdata.get("email") as string;
   try {
     const hashedPassword = await bcrypt.hash(
       formdata.get("password") as string,
@@ -272,6 +210,41 @@ export async function createUser(formdata: FormData) {
     }
 
     console.log("Guest created successfully");
+
+    // Read the HTML template
+    const templatePath = path.join(
+      __dirname,
+      "Forgot password",
+      "reset_password_template.html"
+    );
+    let htmlTemplate = fs.readFileSync(templatePath, "utf8");
+
+    // Nodemailer configuration
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Your City Taxi Credentials",
+      html: htmlTemplate,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        console.log("Failed to send email");
+        return { error: "Failed to send email" };
+      } else {
+        console.log("Email sent");
+        return { status: "success", message: "Email sent" };
+      }
+    });
   } catch (error) {
     return {
       error: (error as Error).message,
@@ -307,6 +280,90 @@ export async function getActiveDriverCount() {
   }
 }
 
+// update location
+
+export async function updateLocation(formdata: FormData) {
+  const guestId = formdata.get("driverId") as string;
+  const lat = formdata.get("lat") as string;
+  const long = formdata.get("long") as string;
+  const location = lat + "," + long;
+  try {
+    await prisma.driverDetails.update({
+      where: {
+        id: Number(guestId),
+      },
+      data: {
+        location: location,
+      },
+    });
+  } catch (error) {
+    return {
+      error: (error as Error).message,
+    };
+  }
+  revalidatePath("/driver");
+}
+
+// update driver status
+
+export async function updateStatus(formdata: FormData) {
+  const guestId = formdata.get("driverId") as string;
+
+  try {
+    await prisma.driverDetails.update({
+      where: {
+        id: Number(guestId),
+      },
+      data: {
+        status: formdata.get("status") as string,
+      },
+    });
+  } catch (error) {
+    return {
+      error: (error as Error).message,
+    };
+  }
+  revalidatePath("/driver");
+}
+
+// update guests
+
+// export async function editGuest(formdata: FormData) {
+//   const guestId = formdata.get("id") as string;
+//   try {
+//     await prisma.guest.update({
+//       where: {
+//         id: Number(guestId),
+//       },
+//       data: {
+//         name: formdata.get("name") as string,
+//         email: formdata.get("email") as string,
+//         phone: formdata.get("phone") as string,
+//         city: formdata.get("city") as string,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error updating guest:", error);
+//   }
+//   revalidatePath("/join/[id]");
+// }
+
+// delete guests
+
+// export async function deleteGuest(id: number) {
+//   try {
+//     await prisma.guest.delete({
+//       where: { id },
+//     });
+//   } catch (error) {
+//     return {
+//       error: "Error deleting user",
+//     };
+//   }
+// }
+
+// create user
+
 // export async function edit(formdata: FormData) {
 //   const guestId = formdata.get("id") as string;
 //   const name = formdata.get("name") as string;
@@ -327,4 +384,44 @@ export async function getActiveDriverCount() {
 //   });
 
 //   revalidatePath("/better");
+// }
+
+// create guest
+
+// export async function createGuest(formdata: FormData) {
+//   const email = formdata.get("email") as string;
+
+//   try {
+//     // Check if the email already exists
+//     const existingGuest = await prisma.guest.findUnique({
+//       where: { email },
+//     });
+
+//     if (existingGuest) {
+//       return {
+//         error: "Email already exists.",
+//       };
+//     }
+
+//     // Create the new guest if the email doesn't exist
+//     await prisma.guest.create({
+//       data: {
+//         name: formdata.get("name") as string,
+//         email: email,
+//         phone: formdata.get("phone") as string,
+//         city: formdata.get("city") as string,
+//         type: formdata.get("type") as string,
+//         gender: formdata.get("gender") as string,
+//       },
+//     });
+
+//     console.log("Guest created successfully");
+//   } catch (error) {
+//     console.error("Error creating guest:", error);
+//     return {
+//       error: "Error adding user",
+//     };
+//   }
+
+//   revalidatePath("/join");
 // }

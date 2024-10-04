@@ -18,7 +18,7 @@ const LocationComponent = () => {
 
   // Load the Google Maps API using the provided API key
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyCCeZh7YYss8jdbH3moLB9F3MKm8MHwlGs",
+    googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY,
   });
 
   const getLocation = () => {

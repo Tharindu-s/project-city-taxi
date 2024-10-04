@@ -8,6 +8,7 @@ export default function Home1Single() {
     <div>
       <Layout breadcrumbTitle={null} headerStyle={1} footerStyle={1} onePageNav>
         <Hero1 />
+
         <Cta1 />
       </Layout>
     </div>

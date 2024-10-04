@@ -1,15 +1,15 @@
 import OngoingRequest from "@/components/driver/OngoingRequest";
 import RequestButton from "@/components/driver/RequestButton";
-import ToggleSwitch from "@/components/driver/ToggleSwitch";
 import Layout from "@/components/layout/Layout";
 import { getUserByEmail } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { cookies } from "next/headers";
-import React, { useEffect } from "react";
+import React from "react";
 import jwt from "jsonwebtoken";
 import VehicleList from "@/components/driver/VehicleList";
-import test from "node:test";
 import Link from "next/link";
+import GetCurrentLocation from "@/components/driver/GetCurrentLocation";
+import { BigSwitchRadio } from "@/components/big-switch-radio";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -132,7 +132,9 @@ export default async function DriverPage() {
               <VehicleList vehiclesList={vehiclesList} />
             )}
 
-            <ToggleSwitch />
+            {/* <ToggleSwitch /> */}
+            <BigSwitchRadio driverId={user.guestId.toString()} />
+            <GetCurrentLocation driverId={user.guestId.toString()} />
 
             {ongoingRequests.length === 0 ? (
               <RequestButton requests={requests} />
