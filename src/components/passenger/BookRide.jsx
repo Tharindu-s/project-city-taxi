@@ -7,11 +7,13 @@ import { useRef, useState } from "react";
 import "./style.css";
 import Map from "@/components/common/MapPassenger";
 import { IoMdLocate } from "react-icons/io";
+import { DriversList } from "@/components/scrollable-driver-list";
 
 const center = { lat: 6.9271, lng: 79.8612 };
 const countryCode = "LK";
 
-export default function Contact() {
+export default function BookARide({ userId }) {
+  console.log("idid", userId);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY,
     libraries: ["places", "geocoding"],
@@ -23,7 +25,9 @@ export default function Contact() {
   const [duration, setDuration] = useState("");
   const [originAutoComplete, setOriginAutoComplete] = useState(null);
   const [destinationAutoComplete, setDestinationAutoComplete] = useState(null);
-  const [selectedVehicle, setSelectedVehicle] = useState(null); // To track selected vehicle
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [originLatLng, setOriginLatLng] = useState(null); // Store origin lat/lng
+  const [destinationLatLng, setDestinationLatLng] = useState(null); // Store destination lat/lng
 
   const originRef = useRef();
   const destinationRef = useRef();
@@ -54,6 +58,8 @@ export default function Contact() {
     setDuration("");
     originRef.current.value = "";
     destinationRef.current.value = "";
+    setOriginLatLng(null); // Clear stored origin lat/lng
+    setDestinationLatLng(null); // Clear stored destination lat/lng
   }
 
   function handleVehicleChange(vehicle) {
@@ -69,25 +75,18 @@ export default function Contact() {
     return "0";
   }
 
-  // New function to get current location
   function getCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-
-          // Reverse geocode the lat/lng to get a human-readable address
           const geocoder = new google.maps.Geocoder();
-          const latlng = {
-            lat: latitude,
-            lng: longitude,
-          };
-
-          console.log(latlng);
+          const latlng = { lat: latitude, lng: longitude };
 
           geocoder.geocode({ location: latlng }, (results, status) => {
             if (status === "OK" && results[0]) {
               originRef.current.value = results[0].formatted_address;
+              setOriginLatLng(latlng); // Store current location lat/lng
             } else {
               alert("Unable to retrieve your location");
             }
@@ -101,6 +100,22 @@ export default function Contact() {
       alert("Geolocation is not supported by this browser.");
     }
   }
+
+  // Function to handle place selection from Autocomplete
+  const handlePlaceSelect = (place, isOrigin) => {
+    if (place.geometry) {
+      const latLng = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      };
+
+      if (isOrigin) {
+        setOriginLatLng(latLng);
+      } else {
+        setDestinationLatLng(latLng);
+      }
+    }
+  };
 
   return (
     <div>
@@ -117,13 +132,13 @@ export default function Contact() {
               <div className="mb-8">
                 <h2>Book a ride</h2>
                 <p className="pt-2">
-                  Locate yourself, pick a location, choose a location and
-                  confirm your ride.
+                  Locate yourself, pick a location, choose a vehicle and confirm
+                  your ride.
                 </p>
               </div>
               <div className="contact-wrapper-2">
                 <div className="row g-4 align-items-center">
-                  <div className="col-lg-6">
+                  <div className="col-lg-12">
                     <div className="h-[50vh] w-full relative">
                       <div className="h-full w-full absolute top-0 left-0">
                         <Map
@@ -139,6 +154,10 @@ export default function Contact() {
                               onLoad={(autocomplete) =>
                                 setOriginAutoComplete(autocomplete)
                               }
+                              onPlaceChanged={() => {
+                                const place = originAutoComplete.getPlace();
+                                handlePlaceSelect(place, true); // true for origin
+                              }}
                               options={{
                                 componentRestrictions: { country: countryCode },
                               }}
@@ -163,6 +182,11 @@ export default function Contact() {
                               onLoad={(autocomplete) =>
                                 setDestinationAutoComplete(autocomplete)
                               }
+                              onPlaceChanged={() => {
+                                const place =
+                                  destinationAutoComplete.getPlace();
+                                handlePlaceSelect(place, false); // false for destination
+                              }}
                               options={{
                                 componentRestrictions: { country: countryCode },
                               }}
@@ -176,8 +200,6 @@ export default function Contact() {
                             </Autocomplete>
                           </div>
                           <div className="flex gap-1">
-                            {/* New Button to get current location */}
-
                             <button
                               onClick={calculateRoute}
                               className="bg-[#e89d04] text-white px-4 py-2 border-none cursor-pointer"
@@ -212,58 +234,62 @@ export default function Contact() {
                       </div>
                     </div>
                   </div>
-
                   <div className="col-lg-6">
-                    <div className="contact-content">
-                      <form
-                        id="contact-form"
-                        method="POST"
-                        className="contact-form-items"
-                      >
-                        <div className="row g-4">
-                          <span>Select an option:</span>
-                          <div
-                            className="col-lg-12 wow fadeInUp  flex flex-wrap"
-                            data-wow-delay=".7s"
-                          >
-                            {vehicles.map((vehicle) => (
-                              <div key={vehicle.id}>
-                                <div className="radio-tile-group">
-                                  <div className="input-container">
-                                    <input
-                                      id={`vehicle-${vehicle.id}`} // Unique ID for each vehicle
-                                      value={vehicle.id}
-                                      className="radio-button"
-                                      type="radio"
-                                      name="radio"
-                                      onChange={() =>
-                                        handleVehicleChange(vehicle)
-                                      }
-                                    />
-                                    <div className="radio-tile">
-                                      <div className="icon walk-icon">
-                                        <vehicle.icon className="mr-2" />
-                                      </div>
-                                      <label
-                                        htmlFor={`vehicle-${vehicle.id}`} // Corrected to htmlFor
-                                        className="radio-tile-label"
-                                      >
-                                        {vehicle.type}
-                                      </label>
+                    <DriversList
+                      latitude={originLatLng ? originLatLng.lat : 6.9271} // Pass user's latitude if available
+                      longitude={originLatLng ? originLatLng.lng : 79.8612}
+                      selectedVehicle={selectedVehicle}
+                      amount={calculateTotal()}
+                      destination={destinationLatLng}
+                      distance={distance}
+                      userId={userId}
+                    />
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="">
+                      <div className="row g-4">
+                        <span>Select an option:</span>
+                        <div
+                          className="col-lg-12 wow fadeInUp  flex flex-wrap"
+                          data-wow-delay=".7s"
+                        >
+                          {vehicles.map((vehicle) => (
+                            <div key={vehicle.id}>
+                              <div className="radio-tile-group">
+                                <div className="input-container">
+                                  <input
+                                    id={`vehicle-${vehicle.id}`} // Unique ID for each vehicle
+                                    value={vehicle.id}
+                                    className="radio-button"
+                                    type="radio"
+                                    name="radio"
+                                    onChange={() =>
+                                      handleVehicleChange(vehicle)
+                                    }
+                                  />
+                                  <div className="radio-tile">
+                                    <div className="icon walk-icon">
+                                      <vehicle.icon className="mr-2" />
                                     </div>
+                                    <label
+                                      htmlFor={`vehicle-${vehicle.id}`} // Corrected to htmlFor
+                                      className="radio-tile-label"
+                                    >
+                                      {vehicle.type}
+                                    </label>
                                   </div>
                                 </div>
                               </div>
-                            ))}
-                          </div>
+                            </div>
+                          ))}
                         </div>
+                      </div>
 
-                        <div className="mt-4 p-3 bg-gray-100 rounded-lg">
-                          <p>
-                            <strong>Total Cost:</strong> {calculateTotal()} LKR
-                          </p>
-                        </div>
-                      </form>
+                      <div className="mt-4 p-3 bg-gray-100 rounded-lg">
+                        <p>
+                          <strong>Total Cost:</strong> {calculateTotal()} LKR
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

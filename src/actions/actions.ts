@@ -6,6 +6,21 @@ import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
+import axios from "axios";
+
+const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_API_KEY";
+
+const getAddressFromLatLng = async (lat: string, lng: string) => {
+  try {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`
+    );
+    return response.data.results[0]?.formatted_address || "Address not found";
+  } catch (error) {
+    console.error("Error fetching address:", error);
+    return null; // Handle errors by returning null
+  }
+};
 
 // create passenger guest
 
@@ -323,6 +338,49 @@ export async function updateStatus(formdata: FormData) {
       error: (error as Error).message,
     };
   }
+  revalidatePath("/driver");
+}
+
+// book a ride
+
+export async function passengerRideBook(formdata: FormData) {
+  try {
+    // Extract pickup and drop locations (assuming they are in the format "latitude,longitude")
+    const pickupLocation = formdata.get("pickupLocation") as string;
+    const dropLocation = formdata.get("dropLocation") as string;
+
+    // Split the pickup and drop locations to get latitude and longitude
+    const [pickupLat, pickupLng] = pickupLocation.split(",");
+    const [dropLat, dropLng] = dropLocation.split(",");
+
+    // Fetch the addresses from the Google Maps API
+    const pickupAddress = await getAddressFromLatLng(pickupLat, pickupLng);
+    const dropAddress = await getAddressFromLatLng(dropLat, dropLng);
+
+    // Create a new ride with the converted addresses
+    await prisma.ride.create({
+      data: {
+        pickupLocation: pickupAddress || pickupLocation, // Fallback to lat, lng if address not found
+        dropLocation: dropAddress || dropLocation, // Fallback to lat, lng if address not found
+        status: "pending",
+        startTime: new Date().toString(),
+        endTime: "pending",
+        amount: formdata.get("amount") as string,
+        distant: formdata.get("distant") as string,
+        paymentMethod: "cash",
+        passengerId: formdata.get("passengerId") as string,
+        driverId: formdata.get("driverId") as string,
+      },
+    });
+
+    console.log("Ride added successfully");
+  } catch (error) {
+    console.error("Error making ride:", error);
+    return {
+      error: "Error making ride",
+    };
+  }
+
   revalidatePath("/driver");
 }
 
