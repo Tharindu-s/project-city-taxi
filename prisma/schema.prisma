@@ -104,7 +104,7 @@ model DriverDetails {
   dob        String
   status     String?  @default("available")
   date       DateTime
-  imgUrl     String
+  driverImgUrl     String
   contact    String
   licenceNo  String
   vehicleId  String?
@@ -113,6 +113,9 @@ model DriverDetails {
   userId     Int?     @unique
   isVerified Boolean  @default(false)
   location   String?
+  licenceImg String
+  revLicenceImg String
+  insuranceImg String
 }
 
 // Vehicle Details

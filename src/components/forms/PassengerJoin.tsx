@@ -125,7 +125,7 @@ const PassengerJoin = () => {
             <div className="form-clt">
               <span>Photo*</span>
               <input
-                type="text"
+                type="file"
                 name="photoUrl"
                 id="photoUrl"
                 placeholder="Photo"
