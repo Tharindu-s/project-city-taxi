@@ -34,14 +34,14 @@ export async function GET(request) {
     // Fetch all drivers from the database
     const drivers = await prisma.driverDetails.findMany({
       where: {
-        status: "available", // Only get drivers with available status
+        status: "avaialble", // Only get drivers with available status
       },
     });
 
     // Filter drivers within 1 km
     const nearbyDrivers = drivers.filter((driver) => {
       const [driverLon, driverLat] = driver.location.split(",").map(Number); // Assuming location is in "lon,lat" format
-      return getDistance(latitude, longitude, driverLat, driverLon) <= 100; // 1 km radius
+      return getDistance(latitude, longitude, driverLat, driverLon) <= 1000; // 1 km radius
     });
 
     return NextResponse.json(nearbyDrivers);

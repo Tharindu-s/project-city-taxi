@@ -31,7 +31,7 @@ export async function POST(request: Request) {
 
   // Redirect based on user type
   if (user.type === "admin") {
-    return new Response(JSON.stringify({ redirectTo: "/admin/dashboard" }), {
+    return new Response(JSON.stringify({ redirectTo: "/dashboard" }), {
       status: 200,
     });
   } else if (user.type === "passenger") {

@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
 import axios from "axios";
+import crypto from "crypto";
 
 const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_API_KEY";
 
@@ -91,7 +92,7 @@ export async function joinDriver(formdata: FormData) {
       };
     } else if (existingPassenger) {
       return {
-        error: "Passenger account found for this email. Use a different email.",
+        error: "Driver account found for this email. Use a different email.",
       };
     }
 
@@ -106,16 +107,22 @@ export async function joinDriver(formdata: FormData) {
         nic: formdata.get("nic") as string,
         dob: formdata.get("dob") as string,
         date: new Date(),
-        imgUrl: formdata.get("imgUrl") as string,
         licenceNo: formdata.get("licenceNo") as string,
+        driverImgUrl: formdata.get("driverImgUrl") as string,
+        insuranceImg: formdata.get("insuranceImg") as string,
+        licenceImg: formdata.get("licenceImg") as string,
+        revLicenceImg: formdata.get("revLicenceImg") as string,
       },
     });
 
     console.log("Guest created successfully");
-  } catch (error) {
+  } catch (error: any) {
+    // You can specify 'any' to ensure TypeScript doesn't throw an error on 'error' type
     console.error("Error creating guest:", error);
+
+    // Return the actual error message (you can extract more details if needed)
     return {
-      error: "Error adding user",
+      error: error.message, // Use the actual error message, or a fallback
     };
   }
 
@@ -228,10 +235,13 @@ export async function createUser(formdata: FormData) {
 
     // Read the HTML template
     const templatePath = path.join(
-      __dirname,
-      "Forgot password",
-      "reset_password_template.html"
+      process.cwd(),
+      "public",
+      "email-templates",
+      "passenger-account-created",
+      "passenger-account-created.html"
     );
+
     let htmlTemplate = fs.readFileSync(templatePath, "utf8");
 
     // Nodemailer configuration
@@ -267,6 +277,81 @@ export async function createUser(formdata: FormData) {
   }
 
   revalidatePath("/join");
+}
+
+// generate password reset token
+
+export async function generateResetToken(email: string) {
+  const user = await prisma.users.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    throw new Error("User not found.");
+  }
+
+  // generate a secure token
+  const token = crypto.randomBytes(32).toString("hex");
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // Token expires in 24 hours
+
+  // save the token in the database
+  await prisma.passwordResetTokens.create({
+    data: {
+      userId: user.id,
+      token,
+      expiresAt,
+    },
+  });
+
+  // generate the reset link
+  const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+
+  // Step 5: Send the email
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+
+  await transporter.sendMail({
+    from: process.env.EMAIL,
+    to: email,
+    subject: "Password Reset Request",
+    html: `<p>Click <a href="${resetLink}">here</a> to reset your password. This link is valid for 24 hours.</p>`,
+  });
+
+  return { success: true, message: "Password reset link sent successfully." };
+}
+
+// reset pasword
+
+export async function resetPassword(token: string, newPassword: string) {
+  // Step 1: Find the token in the database
+  const resetToken = await prisma.passwordResetTokens.findFirst({
+    where: { token },
+  });
+
+  if (!resetToken || resetToken.expiresAt < new Date()) {
+    throw new Error("Invalid or expired token.");
+  }
+
+  // Step 2: Hash the new password
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  // Step 3: Update the user's password
+  await prisma.users.update({
+    where: { id: resetToken.userId },
+    data: { password: hashedPassword },
+  });
+
+  // Step 4: Delete the token
+  await prisma.passwordResetTokens.delete({
+    where: { token },
+  });
+
+  return { success: true, message: "Password reset successfully." };
 }
 
 // driver ride acceptance

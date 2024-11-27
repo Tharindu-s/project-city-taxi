@@ -162,33 +162,33 @@ export const DriversList = ({
               </p>
               <input
                 type="text"
-                className=""
+                className="hidden"
                 defaultValue={selectedDriver.id}
               />
             </div>
           )}
           <form action={clientAction}>
             <input
-              className=" text-black border border-black"
+              className="hidden text-black border border-black"
               type="text"
               name="pickupLocation"
               defaultValue={latitude + "," + longitude}
             />
 
             <input
-              className=" text-black border border-black"
+              className="hidden text-black border border-black"
               type="text"
               defaultValue={selectedVehicle ? selectedVehicle.type : ""}
             />
             <input
-              className=" text-black border border-black"
+              className="hidden text-black border border-black"
               type="text"
               name="amount"
               value={amount.toString()}
               readOnly
             />
             <input
-              className=" text-black border border-black"
+              className="hidden text-black border border-black"
               type="text"
               name="dropLocation"
               defaultValue={
@@ -196,19 +196,19 @@ export const DriversList = ({
               }
             />
             <input
-              className=" text-black border border-black"
+              className="hidden text-black border border-black"
               type="text"
               name="distant"
               defaultValue={distance}
             />
             <input
-              className=" text-black border border-black"
+              className="hidden text-black border border-black"
               type="text"
               name="driverId"
               defaultValue={selectedDriver?.id}
             />
             <input
-              className=" text-black border border-black"
+              className="hidden text-black border border-black"
               type="text"
               name="passengerId"
               defaultValue={userId}

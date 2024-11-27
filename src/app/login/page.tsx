@@ -5,6 +5,7 @@ import Image from "next/image";
 import img from "../../../public/assets/img/join.jpg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ export default function LoginPage() {
     if (data.redirectTo) {
       router.push(data.redirectTo);
     } else {
-      alert(data.message);
+      toast.error(data.message);
     }
   }
 
