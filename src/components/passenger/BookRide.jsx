@@ -196,6 +196,11 @@ export default function BookARide({ userId }) {
                                 placeholder="Where to"
                                 ref={destinationRef}
                                 className="w-full p-2 border border-gray-300 text-black"
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    calculateRoute(); // Trigger calculateRoute on Enter
+                                  }
+                                }}
                               />
                             </Autocomplete>
                           </div>
