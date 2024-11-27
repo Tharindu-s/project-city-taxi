@@ -9,11 +9,7 @@ const menuItems = [
   {
     title: "MENU",
     items: [
-      {
-        icon: homeIcon,
-        label: "Home",
-        href: "/dashboard/",
-      },
+      
       {
         icon: driverIcon,
         label: "Drivers",

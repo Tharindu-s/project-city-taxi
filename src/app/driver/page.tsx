@@ -135,15 +135,17 @@ export default async function DriverPage() {
               <VehicleList vehiclesList={vehiclesList} />
             )}
 
-            {/* <ToggleSwitch /> */}
-            <BigSwitchRadio driverId={user.guestId.toString()} />
-            <GetCurrentLocation driverId={user.guestId.toString()} />
-
+            {/* Trip managment and driver status */}
+            
             {ongoingRequests.length === 0 ? (
-              <RequestButton requests={requests} />
+              <div> <BigSwitchRadio driverId={user.guestId.toString()} />
+              <GetCurrentLocation driverId={user.guestId.toString()} /> 
+              <RequestButton requests={requests} /></div>
+              
             ) : (
               <OngoingRequest ongoingRequests={ongoingRequests} />
             )}
+             
           </div>
         </section>
       </Layout>
