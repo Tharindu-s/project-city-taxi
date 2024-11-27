@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,6 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//admin Table
 model Admin {
   id      Int    @id @default(autoincrement())
   name    String
@@ -15,6 +22,20 @@ model Admin {
   userId  Int    @unique
 }
 
+// //guest table
+// model Guest {
+//   id         Int     @id @default(autoincrement())
+//   name       String?
+//   email      String? @unique
+//   phone      String?
+//   city       String
+//   photoUrl   String?
+//   type       String
+//   gender     String?
+//   isVerified Boolean @default(false)
+// }
+
+//users table
 model Users {
   id       Int      @id @default(autoincrement())
   email    String   @unique
@@ -25,6 +46,7 @@ model Users {
   guestId  Int
 }
 
+//Google Map & Tour Details
 model Ride {
   id             Int    @id @default(autoincrement())
   pickupLocation String
@@ -44,6 +66,7 @@ model Rate {
   rate String
 }
 
+// Driver Rating
 model RideRating {
   id             Int    @id @default(autoincrement())
   rating         String
@@ -57,42 +80,45 @@ model RideRating {
   rideId         String
 }
 
+// Passenger Details
 model PassengerDetails {
   id         Int     @id @default(autoincrement())
   name       String
+  email      String  @unique
   contact    String
   userId     Int?    @unique
-  isVerified Boolean @default(false)
   city       String
-  email      String  @unique
-  gender     String
   photoUrl   String
+  gender     String
   type       String  @default("passenger")
+  isVerified Boolean @default(false)
 }
 
+// Driver Details
 model DriverDetails {
-  id            Int      @id @default(autoincrement())
-  licenceNo     String
-  name          String
-  nic           String
-  dob           String
-  status        String?  @default("available")
-  contact       String
-  userId        Int?     @unique
-  isVerified    Boolean  @default(false)
-  city          String
-  email         String?  @unique
-  gender        String
-  type          String   @default("driver")
-  date          DateTime
-  vehicleId     String?
-  location      String?
-  driverImgUrl  String?
-  insuranceImg  String?
-  licenceImg    String?
-  revLicenceImg String?
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String?  @unique
+  nic        String
+  city       String
+  dob        String
+  status     String?  @default("available")
+  date       DateTime
+  driverImgUrl     String
+  contact    String
+  licenceNo  String
+  vehicleId  String?
+  type       String   @default("driver")
+  gender     String
+  userId     Int?     @unique
+  isVerified Boolean  @default(false)
+  location   String?
+  licenceImg String
+  revLicenceImg String
+  insuranceImg String
 }
 
+// Vehicle Details
 model vehicleDetails {
   id            Int     @id @default(autoincrement())
   number        String  @unique
@@ -104,15 +130,19 @@ model vehicleDetails {
   make          String
   rateId        String?
   revLicenceUrl String
-  insuaranceNo  String
-  driverId      String
-  insuaranceExp String
   revLicenceExp String
+  insuaranceNo  String
+  insuaranceExp String
+  driverId      String
 }
 
-model passwordResetTokens {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  token     String   @unique
-  expiresAt DateTime
-}
+// model Post {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   title     String   @db.VarChar(255)
+//   content   String?
+//   published Boolean  @default(false)
+//   author    User     @relation(fields: [authorId], references: [id])
+//   authorId  Int
+// }
