@@ -73,16 +73,14 @@ const DriverJoin = () => {
   };
 
   useEffect(() => {
-    console.log(image1, image2, image3, image4);
+    console.log("dirver", image1);
+    console.log("insuarance", image2);
+    console.log("licence", image3);
+    console.log("rev", image4);
   }, [image1, image2, image3, image4]);
 
   async function clientAction(formdata: FormData) {
     // construct a new user object
-
-    formdata.append("driverImgUrl", image1);
-    formdata.append("insuranceImg", image2);
-    formdata.append("licenceImg", image3);
-    formdata.append("revLicenceImg", image4);
 
     const user = {
       name: formdata.get("name"),
@@ -92,10 +90,10 @@ const DriverJoin = () => {
       nic: formdata.get("nic"),
       dob: formdata.get("dob"),
       licenceNo: formdata.get("licenceNo"),
-      driverImgUrl: image1,
-      insuranceImg: image2,
-      licenceImg: image3,
-      revLicenceImg: image4,
+      driverImgUrl: formdata.get("driverImgUrl"),
+      insuranceImg: formdata.get("insuranceImg"),
+      licenceImg: formdata.get("licenceImg"),
+      revLicenceImg: formdata.get("revLicenceImg"),
     };
 
     // validation
@@ -216,11 +214,70 @@ const DriverJoin = () => {
           </div>
           <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
             <div className="form-clt">
+              <span>Licence Number*</span>
+              <input
+                type="text"
+                name="licenceNo"
+                id="licenceNo"
+                placeholder="licenceNo"
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp hidden" data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>driver*</span>
+              <input
+                type="text"
+                name="driverImgUrl"
+                id="driverImgUrl"
+                placeholder="driverImgUrl"
+                value={image1}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp hidden" data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>insu*</span>
+              <input
+                type="text"
+                name="insuranceImg"
+                id="insuranceImg"
+                placeholder="insuranceImg"
+                value={image2}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp hidden" data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>lic*</span>
+              <input
+                type="text"
+                name="licenceImg"
+                id="licenceImg"
+                placeholder="licenceImg"
+                value={image3}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp hidden" data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>rev*</span>
+              <input
+                type="text"
+                name="revLicenceImg"
+                id="revLicenceImg"
+                placeholder="revLicenceImg"
+                value={image4}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
+            <div className="form-clt">
               <span>Driver Image*</span>
               <input
                 type="file"
-                name="driverImgUrl"
-                id="driverImgUrl"
+                // name="driverImg"
+                // id="driverImg"
                 onChange={(event) => handleFileChange(event, 1)}
               />
             </div>
@@ -230,8 +287,8 @@ const DriverJoin = () => {
               <span>Insuarance Image*</span>
               <input
                 type="file"
-                name="insuranceImg"
-                id="insuranceImg"
+                // name="insuaranceImg"
+                // id="insuaranceImg"
                 onChange={(event) => handleFileChange(event, 2)}
               />
             </div>
@@ -241,8 +298,8 @@ const DriverJoin = () => {
               <span>License Image*</span>
               <input
                 type="file"
-                name="licenceImg"
-                id="licenceImg"
+                // name="licenceImg"
+                // id="licenceImg"
                 onChange={(event) => handleFileChange(event, 3)}
               />
             </div>
@@ -252,8 +309,8 @@ const DriverJoin = () => {
               <span>Revenue License Image*</span>
               <input
                 type="file"
-                name="revLicenceImg"
-                id="revLicenceImg"
+                // name="revLicenceImg"
+                // id="revLicenceImg"
                 onChange={(event) => handleFileChange(event, 4)}
               />
             </div>

@@ -88,6 +88,9 @@ export default async function DriverPage() {
       make: true,
       seatCount: true,
       type: true,
+      imgUrl1: true,
+      insuaranceExp: true,
+      revLicenceExp: true,
     },
     where: {
       driverId: user.guestId.toString(),

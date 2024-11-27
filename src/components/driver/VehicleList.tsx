@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Vehicle {
   id: number;
@@ -7,6 +8,9 @@ interface Vehicle {
   make: string;
   seatCount: number;
   type: string;
+  imgUrl1: string;
+  insuaranceExp: string;
+  revLicenceExp: string;
 }
 
 interface VehicleListProps {
@@ -26,18 +30,34 @@ const VehicleList = ({ vehiclesList }: VehicleListProps) => {
       {/* <VehicleCard /> */}
       {vehiclesList.map((vehicle) => (
         <div className="service-box-items vehicle-list" key={vehicle.id}>
-          <div className="icon">
-            <img src="/assets/img/service/icon/s-icon-1.svg" alt="icon-img" />
-          </div>
-          <div className="content">
-            <h4>
-              <Link href="/service-details">{vehicle.number}</Link>
-            </h4>
-            <p>{vehicle.make}</p>
-            <p>{vehicle.seatCount} Seats</p>
-            <Link href="/service-details" className="theme-btn-2 mt-3">
-              Manage Vehicle <i className="fa-solid fa-arrow-right-long" />{" "}
-            </Link>
+          <div className="content flex">
+            <div className="mr-6">
+              <Image
+                src={
+                  vehicle.imgUrl1
+                    ? `/${vehicle.imgUrl1
+                        .slice("G:\\GitHub\\project-city-taxi\\public\\".length)
+                        .replace(/\\/g, "/")}`
+                    : "/default-image.jpg"
+                }
+                alt="Vehicle Image"
+                width={400}
+                height={250}
+              />
+            </div>
+            <div>
+              <h4>
+                <Link href="/service-details">{vehicle.number}</Link>
+              </h4>
+              <p>{vehicle.make}</p>
+              <p>{vehicle.seatCount} Seats</p>
+              <p>Insuarance expires on{" " + vehicle.insuaranceExp}</p>
+              <p>Revenue License expires on{" " + vehicle.revLicenceExp}</p>
+
+              <Link href="/service-details" className="theme-btn-2 mt-3">
+                Manage Vehicle <i className="fa-solid fa-arrow-right-long" />{" "}
+              </Link>
+            </div>
           </div>
         </div>
       ))}

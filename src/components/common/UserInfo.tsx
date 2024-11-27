@@ -2,6 +2,7 @@ import React from "react";
 import { VscVerifiedFilled } from "react-icons/vsc";
 import { MdError } from "react-icons/md";
 import AddUser from "@/components/forms/AddUserForm";
+import Image from "next/image";
 
 interface Guest {
   id: number;
@@ -12,6 +13,10 @@ interface Guest {
   isVerified: boolean;
   type: string;
   imgUrl?: string | null;
+  driverImgUrl?: string | null;
+  licenceImg: string | null;
+  insuranceImg?: string | null;
+  revLicenceImg?: string | null;
 }
 
 const UserInfo = ({ guest }: { guest: Guest }) => {
@@ -101,6 +106,78 @@ const UserInfo = ({ guest }: { guest: Guest }) => {
                         defaultValue={guest?.city ?? ""}
                         placeholder="Your City"
                         disabled
+                      />
+                    </div>
+                    <div className="form-clt my-4">
+                      <span>Driver Image*</span>
+                      <Image
+                        src={
+                          guest.driverImgUrl
+                            ? `/${guest.driverImgUrl
+                                .slice(
+                                  "G:\\GitHub\\project-city-taxi\\public\\"
+                                    .length
+                                )
+                                .replace(/\\/g, "/")}`
+                            : "/default-image.jpg"
+                        }
+                        alt="Driver Image"
+                        width={250}
+                        height={250}
+                      />
+                    </div>
+                    <div className="form-clt my-4">
+                      <span>Insuarance Image*</span>
+                      <Image
+                        src={
+                          guest.insuranceImg
+                            ? `/${guest.insuranceImg
+                                .slice(
+                                  "G:\\GitHub\\project-city-taxi\\public\\"
+                                    .length
+                                )
+                                .replace(/\\/g, "/")}`
+                            : "/default-image.jpg"
+                        }
+                        alt="Driver Image"
+                        width={250}
+                        height={250}
+                      />
+                    </div>
+                    <div className="form-clt my-4">
+                      <span>License Image*</span>
+                      <Image
+                        src={
+                          guest.licenceImg
+                            ? `/${guest.licenceImg
+                                .slice(
+                                  "G:\\GitHub\\project-city-taxi\\public\\"
+                                    .length
+                                )
+                                .replace(/\\/g, "/")}`
+                            : "/default-image.jpg"
+                        }
+                        alt="Driver Image"
+                        width={250}
+                        height={250}
+                      />
+                    </div>
+                    <div className="form-clt my-4">
+                      <span>Revenue Licence Image*</span>
+                      <Image
+                        src={
+                          guest.revLicenceImg
+                            ? `/${guest.revLicenceImg
+                                .slice(
+                                  "G:\\GitHub\\project-city-taxi\\public\\"
+                                    .length
+                                )
+                                .replace(/\\/g, "/")}`
+                            : "/default-image.jpg"
+                        }
+                        alt="Driver Image"
+                        width={250}
+                        height={250}
                       />
                     </div>
                   </form>

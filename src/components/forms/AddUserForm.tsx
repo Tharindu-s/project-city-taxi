@@ -72,7 +72,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
         Check the provided details and create a new account
       </p>
       <form action={clientAction} className="contact-form-items">
-        <div className="form-clt my-4 ">
+        <div className="form-clt my-4 hidden">
           <input
             type="text"
             name="guestId"
@@ -80,7 +80,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             defaultValue={guestId ?? ""}
           />
         </div>
-        <div className="form-clt my-4 ">
+        <div className="form-clt my-4 hidden">
           <input
             type="text"
             name="email"
@@ -88,7 +88,7 @@ const AddUser = ({ guestId, guestEmail, guestType }: AddUserProps) => {
             defaultValue={guestEmail ?? ""}
           />
         </div>
-        <div className="form-clt my-4 ">
+        <div className="form-clt my-4 hidden">
           <input
             type="text"
             name="type"

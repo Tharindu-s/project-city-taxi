@@ -32,7 +32,8 @@
     "src/components/driver/GetCurrentLocation.tsx",
     "src/context/LocationContext.jsx",
     "src/app/api/drivers/route.js",
-    "src/components/passenger/BookRide.jsx"
+    "src/components/passenger/BookRide.jsx",
+    "src/app/api/upload/route.js"
   ],
   "exclude": ["node_modules"]
 }

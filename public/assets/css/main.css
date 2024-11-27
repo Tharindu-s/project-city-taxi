@@ -6421,9 +6421,8 @@ input.main-search-input::placeholder {
 }
 
 .service-box-items {
-  margin-top: 30px;
   background-color: #ecebeb;
-  padding: 35px 30px;
+  padding: 30px;
   position: relative;
   z-index: 9;
 }
@@ -6478,9 +6477,6 @@ input.main-search-input::placeholder {
   background-image: url(../../assets/img/service/shape.png);
   z-index: -1;
   transition: all 0.4s ease-in-out;
-}
-.service-box-items .content {
-  margin-top: 20px;
 }
 .service-box-items .content h4 {
   margin-bottom: 5px;

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import "./styles.css";
@@ -23,6 +23,61 @@ const vehicleSchema = z.object({
 });
 
 const AddVehicle = ({ driverId }: { driverId: string }) => {
+  const [image1, setImage1] = useState<string>("");
+  const [image2, setImage2] = useState<string>("");
+  const [image3, setImage3] = useState<string>("");
+  const [image4, setImage4] = useState<string>("");
+
+  const uploadFile = async (file: File, index: number) => {
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const fileContent = reader.result as string;
+      const fileName = file.name;
+
+      // Send the file content (base64) and file name to the backend
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fileName, fileContent }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Successfully uploaded file, now update the state
+        console.log(`File uploaded: ${data.filePath}`);
+
+        // Update state based on the index
+        if (index === 1) setImage1(data.filePath);
+        if (index === 2) setImage2(data.filePath);
+        if (index === 3) setImage3(data.filePath);
+        if (index === 4) setImage4(data.filePath);
+      } else {
+        console.error("Error uploading file:", data.error);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      uploadFile(file, index);
+    }
+  };
+
+  useEffect(() => {
+    console.log("img1", image1);
+    console.log("img2", image2);
+    console.log("img3", image3);
+    console.log("img4", image4);
+  }, [image1, image2, image3, image4]);
+
   async function clientAction(formdata: FormData) {
     // construct a new user object
 
@@ -99,14 +154,62 @@ const AddVehicle = ({ driverId }: { driverId: string }) => {
               />
             </div>
           </div>
-          <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
+          <div className="col-lg-6 wow fadeInUp " data-wow-delay=".5s">
             <div className="form-clt">
-              <span>Vehicle Image 1*</span>
+              <span>driver*</span>
               <input
                 type="text"
                 name="imgUrl1"
                 id="imgUrl1"
+                placeholder="imgUrl1"
+                value={image1}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp " data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>driver*</span>
+              <input
+                type="text"
+                name="imgUrl2"
+                id="imgUrl2"
+                placeholder="imgUrl2"
+                value={image2}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp " data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>driver*</span>
+              <input
+                type="text"
+                name="imgUrl3"
+                id="imgUrl3"
+                placeholder="imgUrl3"
+                value={image3}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp " data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>driver*</span>
+              <input
+                type="text"
+                name="revLicenceUrl"
+                id="imgUrl4"
+                placeholder="imgUrl4"
+                value={image4}
+              />
+            </div>
+          </div>
+          <div className="col-lg-6 wow fadeInUp" data-wow-delay=".5s">
+            <div className="form-clt">
+              <span>Vehicle Image 1*</span>
+              <input
+                type="file"
+                id="imgUrl1"
                 placeholder="Photo"
+                onChange={(event) => handleFileChange(event, 1)}
               />
             </div>
           </div>
@@ -114,10 +217,10 @@ const AddVehicle = ({ driverId }: { driverId: string }) => {
             <div className="form-clt">
               <span>Vehicle Image 2*</span>
               <input
-                type="text"
-                name="imgUrl2"
+                type="file"
                 id="imgUrl2"
                 placeholder="Photo"
+                onChange={(event) => handleFileChange(event, 2)}
               />
             </div>
           </div>
@@ -125,10 +228,10 @@ const AddVehicle = ({ driverId }: { driverId: string }) => {
             <div className="form-clt">
               <span>Vehicle Image 3*</span>
               <input
-                type="text"
-                name="imgUrl3"
+                type="file"
                 id="imgUrl3"
                 placeholder="Photo"
+                onChange={(event) => handleFileChange(event, 3)}
               />
             </div>
           </div>
@@ -191,10 +294,10 @@ const AddVehicle = ({ driverId }: { driverId: string }) => {
             <div className="form-clt">
               <span>Revenue Licence Image*</span>
               <input
-                type="text"
+                type="file"
                 name="revLicenceUrl"
-                id="revLicenceUrl"
                 placeholder="Photo"
+                onChange={(event) => handleFileChange(event, 4)}
               />
             </div>
           </div>

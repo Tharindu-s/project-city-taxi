@@ -9,6 +9,10 @@ export default async function TableDemo() {
       name: true,
       email: true,
       isVerified: true,
+      driverImgUrl: true,
+      licenceImg: true,
+      insuranceImg: true,
+      revLicenceImg: true,
     },
     orderBy: {
       isVerified: "asc",
