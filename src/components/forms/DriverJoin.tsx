@@ -13,7 +13,7 @@ const userSchema = z.object({
   phone: z
     .string()
     .min(10, { message: "Phone number must be at least 10 charatcers long" })
-    .max(10, { message: "Phone number must not exceed 10 charatcers" }),
+    .max(14, { message: "Phone number must not exceed 10 charatcers" }),
   city: z
     .string()
     .max(30, { message: "City must not exceed 30 charatcers" })

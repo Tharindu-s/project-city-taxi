@@ -9,7 +9,6 @@ const menuItems = [
   {
     title: "MENU",
     items: [
-      
       {
         icon: driverIcon,
         label: "Drivers",
@@ -24,6 +23,11 @@ const menuItems = [
         icon: userIcon,
         label: "Book",
         href: "/dashboard/list/book",
+      },
+      {
+        icon: userIcon,
+        label: "History",
+        href: "/dashboard/list/ride-history",
       },
     ],
   },

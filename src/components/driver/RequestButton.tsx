@@ -37,7 +37,7 @@ const RequestButton = async ({ requests }: RequestButtonProps) => {
           New requests
         </DrawerTrigger>
 
-        <DrawerContent>
+        <DrawerContent className="w-[1200px] mx-auto">
           <DrawerHeader>
             <DrawerTitle className="text-4xl">New requests</DrawerTitle>
           </DrawerHeader>
@@ -48,8 +48,11 @@ const RequestButton = async ({ requests }: RequestButtonProps) => {
                 key={request.id}
               >
                 <CardHeader>
-                  <CardTitle>Card Title</CardTitle>
-                  <CardDescription>Card Description</CardDescription>
+                  <CardTitle>New trip alert</CardTitle>
+                  <CardDescription>
+                    A confirmation text will be sent to the passenger if you
+                    accept the trip
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p>{request.pickupLocation}</p>

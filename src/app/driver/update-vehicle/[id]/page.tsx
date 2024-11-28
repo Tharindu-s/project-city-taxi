@@ -7,16 +7,29 @@ import Image from "next/image";
 import { updateVehicle } from "@/actions/actions";
 
 const UpdateVehiclePage = ({ params }: { params: { id: string } }) => {
-  async function clientAction(formdata: FormData) {
-    const result = await updateVehicle(formdata);
-    if (result?.error) {
-      toast.error(result.error);
-    } else {
-      toast.success("Vehicle updated succesfully");
-    }
-  }
+  const [vehicleData, setVehicleData] = useState<VehicleData | null>(null);
+  const [image1, setImage1] = useState<string>("");
+  const [image2, setImage2] = useState<string>("");
+  const [image3, setImage3] = useState<string>("");
+  const [image4, setImage4] = useState<string>("");
 
   const vehicleId = Number(params.id);
+
+  useEffect(() => {
+    async function fetchVehicleData() {
+      const response = await fetch(`/api/get-vehicle?id=${vehicleId}`);
+
+      if (!response.ok) {
+        toast.error("Vehicle not found.");
+        return;
+      }
+
+      const data = await response.json();
+      setVehicleData(data);
+    }
+
+    fetchVehicleData();
+  }, [vehicleId]);
 
   if (isNaN(vehicleId)) {
     return notFound();
@@ -37,15 +50,17 @@ const UpdateVehiclePage = ({ params }: { params: { id: string } }) => {
     driverId: string;
     insuaranceExp: string;
     revLicenceExp: string;
-
     // Add other fields as necessary
   };
 
-  const [vehicleData, setVehicleData] = useState<VehicleData | null>(null);
-  const [image1, setImage1] = useState<string>("");
-  const [image2, setImage2] = useState<string>("");
-  const [image3, setImage3] = useState<string>("");
-  const [image4, setImage4] = useState<string>("");
+  async function clientAction(formdata: FormData) {
+    const result = await updateVehicle(formdata);
+    if (result?.error) {
+      toast.error(result.error);
+    } else {
+      toast.success("Vehicle updated succesfully");
+    }
+  }
 
   const uploadFile = async (file: File, index: number) => {
     const reader = new FileReader();
@@ -53,7 +68,6 @@ const UpdateVehiclePage = ({ params }: { params: { id: string } }) => {
       const fileContent = reader.result as string;
       const fileName = file.name;
 
-      // Send the file content (base64) and file name to the backend
       const response = await fetch("/api/upload", {
         method: "POST",
         headers: {
@@ -65,10 +79,6 @@ const UpdateVehiclePage = ({ params }: { params: { id: string } }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Successfully uploaded file, now update the state
-        console.log(`File uploaded: ${data.filePath}`);
-
-        // Update state based on the index
         if (index === 1) setImage1(data.filePath);
         if (index === 2) setImage2(data.filePath);
         if (index === 3) setImage3(data.filePath);
@@ -88,29 +98,6 @@ const UpdateVehiclePage = ({ params }: { params: { id: string } }) => {
       uploadFile(file, index);
     }
   };
-
-  useEffect(() => {
-    console.log("img1", image1);
-    console.log("img2", image2);
-    console.log("img3", image3);
-    console.log("img4", image4);
-  }, [image1, image2, image3, image4]);
-
-  useEffect(() => {
-    async function fetchVehicleData() {
-      const response = await fetch(`/api/get-vehicle?id=${vehicleId}`);
-
-      if (!response.ok) {
-        toast.error("Vehicle not found.");
-        return;
-      }
-
-      const data = await response.json();
-      setVehicleData(data);
-    }
-
-    fetchVehicleData();
-  }, [vehicleId]);
 
   if (!vehicleData) {
     return <div>Loading...</div>;

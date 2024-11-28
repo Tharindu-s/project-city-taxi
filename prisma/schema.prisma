@@ -45,16 +45,14 @@ model Rate {
 }
 
 model RideRating {
-  id             Int    @id @default(autoincrement())
-  rating         String
-  comment        String
-  safeDrive      String
-  professional   String
-  routeExpertise String
-  onTime         String
-  vehicleState   String
-  driverId       String
-  rideId         String
+  id           Int     @id @default(autoincrement())
+  comment      String?
+  safeDrive    String
+  professional String
+  onTime       String
+  vehicleState String
+  driverId     String
+  rideId       String
 }
 
 model PassengerDetails {

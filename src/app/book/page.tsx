@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import { getUserByEmail } from "@/lib/auth";
 import jwt from "jsonwebtoken";
 import prisma from "@/lib/db";
+import OngoingRidesPassenger from "@/components/passenger/OngoingRidesPassenger";
+import Layout from "@/components/layout/Layout";
 
 export default async function Book() {
   const token = cookies().get("token")?.value;
@@ -45,12 +47,25 @@ export default async function Book() {
     },
   });
 
-  const id = userId?.id;
+  if (!userId) {
+    return <div>Access Denied</div>;
+  }
+
+  const id = userId.id;
   console.log(userId);
 
   return (
     <div>
-      <BookARide userId={id} />
+      <Layout
+        headerStyle={1}
+        footerStyle={1}
+        onePageNav={null}
+        key={null}
+        breadcrumbTitle={null}
+      >
+        <OngoingRidesPassenger userId={id} />
+        <BookARide userId={id} />
+      </Layout>
     </div>
   );
 }

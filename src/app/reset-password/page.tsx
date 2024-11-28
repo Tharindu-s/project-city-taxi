@@ -1,10 +1,10 @@
 "use client";
-
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { resetPassword } from "@/actions/actions"; // The server action
 
-export default function ResetPassword() {
+const ResetPasswordForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -51,5 +51,13 @@ export default function ResetPassword() {
         <button type="submit">Reset Password</button>
       </form>
     </div>
+  );
+};
+
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }

@@ -14,7 +14,7 @@ interface Guest {
   type: string;
   imgUrl?: string | null;
   driverImgUrl?: string | null;
-  licenceImg: string | null;
+  licenceImg?: string | null;
   insuranceImg?: string | null;
   revLicenceImg?: string | null;
 }

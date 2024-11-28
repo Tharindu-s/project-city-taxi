@@ -189,6 +189,37 @@ export async function addVehicle(formdata: FormData) {
   revalidatePath("/driver");
 }
 
+// add rating
+
+export async function addRating(formdata: FormData) {
+  try {
+    // Create the new guest if the email doesn't exist
+    await prisma.rideRating.create({
+      data: {
+        safeDrive: formdata.get("safeDrive") as string,
+        professional: formdata.get("professional") as string,
+        onTime: formdata.get("onTime") as string,
+        vehicleState: formdata.get("vehicleState") as string,
+        driverId: formdata.get("driverId") as string,
+        rideId: formdata.get("rideId") as string,
+        comment: formdata.get("comment") as string,
+      },
+    });
+
+    console.log("Your review was submitted successfully");
+  } catch (error: any) {
+    // You can specify 'any' to ensure TypeScript doesn't throw an error on 'error' type
+    console.error("Error submitting review:", error);
+
+    // Return the actual error message (you can extract more details if needed)
+    return {
+      error: error.message, // Use the actual error message, or a fallback
+    };
+  }
+
+  revalidatePath("/book");
+}
+
 // update a vehicle
 
 export async function updateVehicle(formdata: FormData) {
@@ -411,7 +442,7 @@ export async function updateRideStatus(rideId: number, newStatus: string) {
   revalidatePath("/driver");
 }
 
- // Adjust the import based on your setup
+// Adjust the import based on your setup
 
 // export async function updateRideStatus(rideId: number, newStatus: string) {
 //   try {
@@ -447,7 +478,7 @@ export async function updateRideStatus(rideId: number, newStatus: string) {
 //     }
 
 //     // Format SMS message
-//     const message = `Ride Update: 
+//     const message = `Ride Update:
 //     Driver Name: ${driver.name}
 //     NIC: ${driver.nic}
 //     Gender: ${driver.gender}
@@ -479,7 +510,6 @@ export async function updateRideStatus(rideId: number, newStatus: string) {
 //     throw error;
 //   }
 // }
-
 
 // get driver count
 
