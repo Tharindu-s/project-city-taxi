@@ -230,7 +230,7 @@ export default function Contact() {
                               data-wow-delay=".3s"
                             >
                               <div className="form-clt">
-                                <span>Your name*</span>
+                                <span>Passenger Name</span>
                                 <input
                                   type="text"
                                   name="name"
@@ -239,7 +239,7 @@ export default function Contact() {
                                 />
                               </div>
                             </div>
-                            <div
+                            {/* <div
                               className="col-lg-6 wow fadeInUp"
                               data-wow-delay=".5s"
                             >
@@ -252,13 +252,13 @@ export default function Contact() {
                                   placeholder="Your Email"
                                 />
                               </div>
-                            </div>
+                            </div> */}
                             <div
                               className="col-lg-6 wow fadeInUp"
                               data-wow-delay=".5s"
                             >
                               <div className="form-clt">
-                                <span>Your Contact Number*</span>
+                                <span>Contact Number</span>
                                 <input
                                   type="text"
                                   name="phone"
@@ -267,7 +267,7 @@ export default function Contact() {
                                 />
                               </div>
                             </div>
-                            <div
+                            {/* <div
                               className="col-lg-6 wow fadeInUp"
                               data-wow-delay=".5s"
                             >
@@ -280,7 +280,7 @@ export default function Contact() {
                                   placeholder="Your City"
                                 />
                               </div>
-                            </div>
+                            </div> */}
                             <div
                               className="col-lg-6 wow fadeInUp"
                               data-wow-delay=".5s"

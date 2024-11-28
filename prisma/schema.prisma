@@ -116,3 +116,18 @@ model passwordResetTokens {
   token     String   @unique
   expiresAt DateTime
 }
+
+model GuestRide {
+  id             Int    @id @default(autoincrement())
+  pickupLocation String
+  dropLocation   String
+  status         String
+  startTime      String
+  endTime        String
+  amount         String
+  distant        String
+  paymentMethod  String
+  name           String
+  contact        String
+  driverId       String
+}
