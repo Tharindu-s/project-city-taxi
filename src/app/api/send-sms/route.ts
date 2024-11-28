@@ -52,6 +52,18 @@ export async function POST(req: Request) {
         );
         }
 
+        // Fetch vehicle details associated with the ride's driver
+        const vehicle = await prisma.vehicleDetails.findUnique({
+            where: { id: driver.vehicleId ? parseInt(driver.vehicleId) : undefined },
+        });
+    
+        if (!vehicle) {
+        return NextResponse.json(
+            { success: false, error: "Vehicle details not found for the driver" },
+            { status: 404 }
+            );
+        }
+
         // Construct the SMS message
         const message = `
             Ride Details:
@@ -67,6 +79,13 @@ export async function POST(req: Request) {
             Licence No: ${driver.licenceNo}
             Verified: ${driver.isVerified ? "Yes" : "No"}
             Gender: ${driver.gender}
+
+            Vehicle Details:
+            Number: ${vehicle.number}
+            Type: ${vehicle.type}
+            Seat Count: ${vehicle.seatCount}
+            Make: ${vehicle.make}
+            Insurance Expiry: ${vehicle.insuaranceExp}
 
         `;
 
