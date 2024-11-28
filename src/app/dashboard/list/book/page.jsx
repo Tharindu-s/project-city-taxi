@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import "./style.css";
 import Map from "@/components/common/Map";
 
-const center = { lat: 6.9271, lng: 79.8612 };
+const center = { lat: 6.888460, lng: 79.858168 };
 const countryCode = "LK";
 
 export default function Contact() {
@@ -22,6 +22,7 @@ export default function Contact() {
   const [originAutoComplete, setOriginAutoComplete] = useState(null);
   const [destinationAutoComplete, setDestinationAutoComplete] = useState(null);
   const [selectedVehicle, setSelectedVehicle] = useState(null); // To track selected vehicle
+  const [marker, setMarker] = useState(null); // To store the marker
 
   const originRef = useRef();
   const destinationRef = useRef();
@@ -44,7 +45,54 @@ export default function Contact() {
     setDirectionsResponse(results);
     setDistance(results.routes[0].legs[0].distance.text);
     setDuration(results.routes[0].legs[0].duration.text);
+
+      // Function to handle centering the map and pinning the marker
+  const handlePinLocation = () => {
+    if (map) {
+      map.panTo(center); // Pan to the center location
+      map.setZoom(15); // Set the zoom level
+
+      // If a marker already exists, remove it
+      if (marker) {
+        marker.setMap(null);
+      }
+
+      // Create a new marker and place it on the map
+      const newMarker = new google.maps.Marker({
+        position: center,
+        map: map,
+        title: "Pinned Location",
+      });
+
+      // Set the marker in state so we can remove it later if needed
+      setMarker(newMarker);
+    }
+  };
   }
+
+   // Function to handle centering the map and pinning the marker
+   const handlePinLocation = () => {
+    if (map) {
+      map.panTo(center); // Pan to the center location
+      map.setZoom(15); // Set the zoom level
+
+      // If a marker already exists, remove it
+      if (marker) {
+        marker.setMap(null);
+      }
+
+      // Create a new marker and place it on the map
+      const newMarker = new google.maps.Marker({
+        position: center,
+        map: map,
+        title: "Pinned Location",
+      });
+
+      // Set the marker in state so we can remove it later if needed
+      setMarker(newMarker);
+    }
+  };
+
 
   function clearRoute() {
     setDirectionsResponse(null);
@@ -202,10 +250,7 @@ export default function Contact() {
                         <span>Distance: {distance} </span>
                         <span>Duration: {duration} </span>
                         <button
-                          onClick={() => {
-                            map?.panTo(center);
-                            map?.setZoom(15);
-                          }}
+                          onClick={handlePinLocation} // Pin the location when clicked
                           style={{
                             backgroundColor: "transparent",
                             border: "none",
