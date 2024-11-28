@@ -354,7 +354,7 @@ export async function resetPassword(token: string, newPassword: string) {
   return { success: true, message: "Password reset successfully." };
 }
 
-// driver ride acceptance
+//driver ride acceptance
 
 export async function updateRideStatus(rideId: number, newStatus: string) {
   await prisma.ride.update({
@@ -363,6 +363,76 @@ export async function updateRideStatus(rideId: number, newStatus: string) {
   });
   revalidatePath("/driver");
 }
+
+ // Adjust the import based on your setup
+
+// export async function updateRideStatus(rideId: number, newStatus: string) {
+//   try {
+//     // Update the ride status
+//     await prisma.ride.update({
+//       where: { id: rideId },
+//       data: { status: newStatus },
+//     });
+
+//     // Fetch driver details related to the ride
+//     const driver = await prisma.driverDetails.findFirst({
+//       where: { rides: { some: { id: rideId } } }, // Adjust the condition based on your schema
+//       select: {
+//         name: true,
+//         nic: true,
+//         gender: true,
+//         licenceNo: true,
+//         contact: true,
+//       },
+//     });
+
+//     // Fetch vehicle details related to the driver
+//     const vehicle = await prisma.vehicleDetails.findFirst({
+//       where: { driverId: driver?.id }, // Ensure driverId links vehicles to drivers
+//       select: {
+//         type: true,
+//         number: true,
+//       },
+//     });
+
+//     if (!driver || !vehicle) {
+//       throw new Error("Driver or vehicle details not found.");
+//     }
+
+//     // Format SMS message
+//     const message = `Ride Update: 
+//     Driver Name: ${driver.name}
+//     NIC: ${driver.nic}
+//     Gender: ${driver.gender}
+//     Vehicle: ${vehicle.type} (${vehicle.number})
+//     Licence No: ${driver.licenceNo}`;
+
+//     // Send SMS using the API route
+//     const response = await fetch(`${process.env.BASE_URL}/api/send-sms`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         to: driver.contact,
+//         message: message,
+//       }),
+//     });
+
+//     if (!response.ok) {
+//       const errorData = await response.json();
+//       throw new Error(`Failed to send SMS: ${errorData.error}`);
+//     }
+
+//     console.log("SMS sent successfully");
+//   } catch (error) {
+//     if (error instanceof Error) {
+//       console.error("Error updating ride status or sending SMS:", error.message);
+//     } else {
+//       console.error("Error updating ride status or sending SMS:", error);
+//     }
+//     throw error;
+//   }
+// }
+
 
 // get driver count
 
