@@ -189,6 +189,53 @@ export async function addVehicle(formdata: FormData) {
   revalidatePath("/driver");
 }
 
+// update a vehicle
+
+export async function updateVehicle(formdata: FormData) {
+  const id = Number(formdata.get("id"));
+
+  try {
+    // Ensure the vehicle exists before updating
+    const existingVehicle = await prisma.vehicleDetails.findUnique({
+      where: { id },
+    });
+
+    if (!existingVehicle) {
+      return {
+        error: "Vehicle not found.",
+      };
+    }
+
+    // Update the vehicle details
+    await prisma.vehicleDetails.update({
+      where: { id },
+      data: {
+        number: formdata.get("number") as string,
+        // type: formdata.get("type") as string,
+        seatCount: Number(formdata.get("seatCount")),
+        imgUrl1: formdata.get("imgUrl1") as string,
+        imgUrl2: formdata.get("imgUrl2") as string,
+        imgUrl3: formdata.get("imgUrl3") as string,
+        make: formdata.get("make") as string,
+        // revLicenceUrl: formdata.get("revLicenceUrl") as string,
+        revLicenceExp: formdata.get("revLicenceExp") as string,
+        insuaranceNo: formdata.get("insuaranceNo") as string,
+        insuaranceExp: formdata.get("insuaranceExp") as string,
+      },
+    });
+
+    console.log("Vehicle updated successfully");
+
+    // Revalidate any relevant paths
+    revalidatePath(`/driver/update-vehicle/${id}`);
+  } catch (error) {
+    console.error("Error updating vehicle:", error);
+    return {
+      error: "Error updating vehicle",
+    };
+  }
+}
+
 export async function createUser(formdata: FormData) {
   const email = formdata.get("email") as string;
   try {

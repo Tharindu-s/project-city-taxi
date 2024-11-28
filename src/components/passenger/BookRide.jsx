@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 import { vehicles } from "@/data/vehicles";
 import { FaLocationArrow, FaTimes } from "react-icons/fa";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./style.css";
 import Map from "@/components/common/MapPassenger";
 import { IoMdLocate } from "react-icons/io";
@@ -111,12 +111,13 @@ export default function BookARide({ userId }) {
 
       if (isOrigin) {
         setOriginLatLng(latLng);
+        console.log("Origin Address:", place.formatted_address); // Debugging statement
       } else {
         setDestinationLatLng(latLng);
+        console.log("Destination Address:", place.formatted_address); // Debugging statement
       }
     }
   };
-
   return (
     <div>
       <Layout
@@ -243,6 +244,14 @@ export default function BookARide({ userId }) {
                       destination={destinationLatLng}
                       distance={distance}
                       userId={userId}
+                      startAddress={
+                        originRef.current ? originRef.current.value : ""
+                      } // Pass the start address
+                      endAddress={
+                        destinationRef.current
+                          ? destinationRef.current.value
+                          : ""
+                      } // Pass the end address
                     />
                   </div>
                   <div className="col-lg-6">

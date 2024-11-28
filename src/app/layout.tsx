@@ -33,7 +33,16 @@ export default function RootLayout({
       <LocationProvider>
         <body className={`${kumbh.className}`}>
           {children}
-          <Toaster position="top-right" />
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              className: "",
+              style: {
+                borderRadius: "0px",
+                padding: "16px",
+              },
+            }}
+          />
         </body>
       </LocationProvider>
     </html>

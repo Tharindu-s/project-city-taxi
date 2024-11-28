@@ -30,15 +30,15 @@ export function BigSwitchRadio({ driverId }: { driverId: string }) {
         >
           <div className="relative">
             <RadioGroupItem
-              value="avaialble"
-              id="avaialble"
+              value="available"
+              id="available"
               className="peer sr-only"
               type="submit"
             />
             <Label
-              htmlFor="avaialble"
+              htmlFor="available"
               className={`cursor-pointer select-none rounded-full px-6 py-3 text-lg font-medium transition-colors w-32 text-center ${
-                value === "avaialble"
+                value === "available"
                   ? "bg-accent text-neutral-50 dark:bg-neutral-50 dark:text-neutral-900"
                   : "bg-transparent text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800"
               }`}

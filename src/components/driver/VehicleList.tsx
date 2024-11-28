@@ -46,15 +46,16 @@ const VehicleList = ({ vehiclesList }: VehicleListProps) => {
               />
             </div>
             <div>
-              <h4>
-                <Link href="/service-details">{vehicle.number}</Link>
-              </h4>
+              <h4>{vehicle.number}</h4>
               <p>{vehicle.make}</p>
               <p>{vehicle.seatCount} Seats</p>
               <p>Insuarance expires on{" " + vehicle.insuaranceExp}</p>
               <p>Revenue License expires on{" " + vehicle.revLicenceExp}</p>
 
-              <Link href="/service-details" className="theme-btn-2 mt-3">
+              <Link
+                href={`driver/update-vehicle/${vehicle.id}`}
+                className="theme-btn-2 mt-3"
+              >
                 Manage Vehicle <i className="fa-solid fa-arrow-right-long" />{" "}
               </Link>
             </div>

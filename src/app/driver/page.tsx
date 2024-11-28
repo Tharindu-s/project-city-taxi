@@ -42,6 +42,8 @@ export default async function DriverPage() {
     return <div>Access Denied</div>;
   }
 
+  const driverId = user.guestId.toString();
+
   const requests = await prisma.ride.findMany({
     select: {
       id: true,
@@ -136,16 +138,17 @@ export default async function DriverPage() {
             )}
 
             {/* Trip managment and driver status */}
-            
+
             {ongoingRequests.length === 0 ? (
-              <div> <BigSwitchRadio driverId={user.guestId.toString()} />
-              <GetCurrentLocation driverId={user.guestId.toString()} /> 
-              <RequestButton requests={requests} /></div>
-              
+              <div>
+                {" "}
+                <BigSwitchRadio driverId={user.guestId.toString()} />
+                <GetCurrentLocation driverId={user.guestId.toString()} />
+                <RequestButton requests={requests} />
+              </div>
             ) : (
               <OngoingRequest ongoingRequests={ongoingRequests} />
             )}
-             
           </div>
         </section>
       </Layout>

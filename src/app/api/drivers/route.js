@@ -34,7 +34,7 @@ export async function GET(request) {
     // Fetch all drivers from the database
     const drivers = await prisma.driverDetails.findMany({
       where: {
-        status: "avaialble", // Only get drivers with available status
+        status: "available", // Only get drivers with available status
       },
     });
 
