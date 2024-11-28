@@ -30,6 +30,8 @@ interface DriversListProps {
   destination: { lat: number; lng: number } | null;
   distance: string;
   userId: number;
+  startAddress: string;
+  endAddress: string;
 }
 
 // Define the component without using React.FC
@@ -41,7 +43,11 @@ export const DriversList = ({
   destination,
   distance,
   userId,
+  startAddress,
+  endAddress,
 }: DriversListProps) => {
+  console.log("Start Address:", startAddress);
+  console.log("End Address:", endAddress);
   async function clientAction(formdata: FormData) {
     const result = await passengerRideBook(formdata);
     if (result?.error) {
@@ -126,10 +132,7 @@ export const DriversList = ({
                     <p className="text-sm text-muted-foreground">
                       NIC: {driver.nic}
                     </p>
-                    <p className="text-accent">
-                      {driver.status.charAt(0).toUpperCase() +
-                        driver.status.slice(1).toLowerCase()}
-                    </p>
+                    <p className="text-accent">Available</p>
                   </div>
                   <Button
                     type="button"
@@ -172,7 +175,7 @@ export const DriversList = ({
               className="hidden text-black border border-black"
               type="text"
               name="pickupLocation"
-              defaultValue={latitude + "," + longitude}
+              defaultValue={startAddress}
             />
 
             <input
@@ -191,9 +194,7 @@ export const DriversList = ({
               className="hidden text-black border border-black"
               type="text"
               name="dropLocation"
-              defaultValue={
-                destination ? `${destination.lat}, ${destination.lng}` : ""
-              }
+              defaultValue={endAddress}
             />
             <input
               className="hidden text-black border border-black"

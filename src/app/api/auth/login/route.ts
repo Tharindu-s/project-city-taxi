@@ -31,11 +31,14 @@ export async function POST(request: Request) {
 
   // Redirect based on user type
   if (user.type === "admin") {
-    return new Response(JSON.stringify({ redirectTo: "/dashboard/list/drivers" }), {
-      status: 200,
-    });
+    return new Response(
+      JSON.stringify({ redirectTo: "/dashboard/list/drivers" }),
+      {
+        status: 200,
+      }
+    );
   } else if (user.type === "passenger") {
-    return new Response(JSON.stringify({ redirectTo: "/passenger/booking" }), {
+    return new Response(JSON.stringify({ redirectTo: "/book" }), {
       status: 200,
     });
   } else if (user.type === "driver") {

@@ -76,7 +76,7 @@ model DriverDetails {
   name          String
   nic           String
   dob           String
-  status        String?  @default("available")
+  status        String?  @default("busy")
   contact       String
   userId        Int?     @unique
   isVerified    Boolean  @default(false)
